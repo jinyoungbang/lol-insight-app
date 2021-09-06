@@ -1,0 +1,28 @@
+import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import styled from "styled-components";
+
+import InfoHeader from "./components/InfoHeader";
+import InfoInsight from "./components/InfoInsight"
+import Ads from "./components/Ads";
+
+const Insights = () => {
+  const { region, name } = useParams();
+  return (
+    <Container>
+        <InfoHeader region={region} name={name} />
+        <Ads />
+        <InfoInsight />
+    </Container>
+  );
+};
+
+export const Container = styled.div`
+  width: 100%;
+  flex-direction: row;
+  height: 100%;
+  margin: 0 auto;
+`;
+
+export default Insights;
+
