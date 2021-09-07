@@ -69,7 +69,7 @@ const InfoInsight = (props) => {
   return (
     <InfoInsightContainer>
       <GraphContainer>
-        <div className={classes.demo1}>
+        {/* <div className={classes.demo1}>
           <AntTabs
             value={value}
             onChange={handleChange}
@@ -80,7 +80,7 @@ const InfoInsight = (props) => {
             <AntTab label="Top" />
           </AntTabs>
           <Typography className={classes.padding} />
-        </div>
+        </div> */}
         <InsightGraph />
       </GraphContainer>
     </InfoInsightContainer>

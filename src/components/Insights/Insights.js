@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import InfoHeader from "./components/InfoHeader";
+import SearchHeader from "./components/SearchHeader";
+import UserInfoHeader from "./components/UserInfoHeader";
 import InfoInsight from "./components/InfoInsight"
 import Ads from "./components/Ads";
 
@@ -10,7 +11,8 @@ const Insights = () => {
   const { region, name } = useParams();
   return (
     <Container>
-        <InfoHeader region={region} name={name} />
+        <SearchHeader />
+        <UserInfoHeader region={region} name={name} />
         <Ads />
         <InfoInsight />
     </Container>

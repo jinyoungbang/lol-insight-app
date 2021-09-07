@@ -5,7 +5,9 @@ const Ads = () => {
   return (
     <HeaderContainer>
       <ContentContainer>
-        <h1>put ad here</h1>
+        <MockAd>
+          Advertisement block
+        </MockAd>
       </ContentContainer>
     </HeaderContainer>
   );
@@ -24,6 +26,16 @@ const ContentContainer = styled.div`
   display: flex;
   align-self: center;
   align-content: center;
+  vertical-align: middle;
+  text-align:center;
+  padding: 30px 0;
+`;
+
+const MockAd = styled.div`
+  margin: 0 auto;
+  height: 120px;
+  width: 700px;
+  background: #d4ccfc;
 `;
 
 
