@@ -24,6 +24,9 @@ export const Container = styled.div`
   flex-direction: row;
   height: 100%;
   margin: 0 auto;
+  min-width: 970px;
+  position: relative;
+  overflow: hidden;
 `;
 
 export default Insights;

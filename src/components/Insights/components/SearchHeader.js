@@ -39,6 +39,8 @@ const HeaderContainer = styled.div`
   background: linear-gradient(to right,#635bff 0%,#003ab9 50%, #0273e6 100%);
   flex-direction: row;
   display: flex;
+  min-width: inherit;
+  overflow: auto;
 `;
 
 const ContentContainer = styled.div`
