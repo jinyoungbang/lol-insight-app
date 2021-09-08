@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -35,11 +35,9 @@ const useStyles = makeStyles((theme) => ({
 const SearchHeader = (props) => {
   const classes = useStyles();
 
-  const [region, setRegion] = React.useState("NA");
+  const [region, setRegion] = useState("NA");
+  const [name, setName] = useState("");
 
-  const handleChange = (event) => {
-    setRegion(event.target.value);
-  };
   return (
     <HeaderContainer>
       <ContentContainer>
@@ -51,7 +49,7 @@ const SearchHeader = (props) => {
           <Paper component="form" className={classes.root}>
             <RegionDropdown
               value={region}
-              onChange={handleChange}
+              onChange={(e) => setRegion(e.target.value)}
               displayEmpty
               className={classes.selectEmpty}
               disableUnderline
@@ -71,8 +69,9 @@ const SearchHeader = (props) => {
             <Divider className={classes.divider} orientation="vertical" />
             <InputBase
               className={classes.input}
-              placeholder="Name"
-              inputProps={{ "aria-label": "search google maps" }}
+              placeholder="Name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <IconButton
               type="submit"
