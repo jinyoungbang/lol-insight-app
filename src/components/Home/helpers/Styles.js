@@ -11,7 +11,7 @@ export const BackgroundContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f9f6f9;
+  background-color: linear-gradient(to right,#635bff 0%,#003ab9 50%, #0273e6 100%);  
 `;
 
 export const TitleText = styled.div`
