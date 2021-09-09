@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const UserInfoHeader = (props) => {
+
   return (
     <HeaderContainer>
       <ContentContainer>

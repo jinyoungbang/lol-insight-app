@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -59,12 +59,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfoInsight = (props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const classes = useStyles();
+  // const [value, setValue] = React.useState(0);
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <InfoInsightContainer>
@@ -81,7 +80,9 @@ const InfoInsight = (props) => {
           </AntTabs>
           <Typography className={classes.padding} />
         </div> */}
-        <InsightGraph />
+        {props.data.map((data, i) => (
+          <InsightGraph key={i} data={data} />
+        ))}
       </GraphContainer>
     </InfoInsightContainer>
   );

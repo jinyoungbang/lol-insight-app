@@ -11,38 +11,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Match 0",
-    kda: 1.4
-  },
-  {
-    name: "Match 1",
-    kda: 2.0
-  },
-  {
-    name: "Match 2",
-    kda: 11.0
-  },
-  {
-    name: "Match 3",
-    kda: 0.82
-  },
-  {
-    name: "Match 4",
-    kda: 1.0
-  },
-  {
-    name: "Match 5",
-    kda: 3.65
-  },
-  {
-    name: "Match 6",
-    kda: 4
-  },
-];
+
 
 const InsightGraph = (props) => {
+  const data = props.data.data.map((val, i) => ({
+    "name": "Match " + i.toString()
+  }))
+  console.log(data);
   return (
     <InsightGraphContainer>
       <ContentContainer>
@@ -65,7 +40,7 @@ const InsightGraph = (props) => {
             <Legend />
             <Line
               type="monotone"
-              dataKey="kda"
+              dataKey={props.data.statsName}
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />

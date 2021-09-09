@@ -1,18 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+
+import { Redirect } from "react-router-dom";
+
+import validateAndConvertRegion from "../functions";
+// import DirectionsIcon from "@material-ui/icons/Directions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
+    margin: "2px 0",
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    height: "35px",
+    width: 325,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
   },
 }));
 
 const SearchHeader = (props) => {
   const classes = useStyles();
+
+  const [region, setRegion] = useState("");
+  const [name, setName] = useState("");
+
+
+  const searchName = () => {
+    console.log(name);
+    const regionConverted = validateAndConvertRegion(props.region);
+    if (regionConverted["status"]) {
+      (window.location.href =
+        "/insights/" + regionConverted["region"] + "/" + props.name);
+    }
+  };
+
+  useEffect(() => {
+    console.log(props.region);
+    setRegion(props.region.toUpperCase());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <HeaderContainer>
       <ContentContainer>
@@ -21,14 +66,41 @@ const SearchHeader = (props) => {
           Logo Here
         </LogoContainer>
         <SearchContainer>
-          <form className={classes.root} noValidate autoComplete="off">
-            <CustomTextField
-              size="small"
-              id="summoner-name"
-              label="Summoner Name"
-              variant="outlined"
+          <Paper component="form" className={classes.root}>
+            <RegionDropdown
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              displayEmpty
+              className={classes.selectEmpty}
+              disableUnderline
+            >
+              <MenuItem value={"NA"}>NA</MenuItem>
+              <MenuItem value={"EUW"}>EUW</MenuItem>
+              <MenuItem value={"EUN"}>EUN</MenuItem>
+              <MenuItem value={"KR"}>KR</MenuItem>
+              <MenuItem value={"BR"}>BR</MenuItem>
+              <MenuItem value={"JP"}>JP</MenuItem>
+              <MenuItem value={"RU"}>RU</MenuItem>
+              <MenuItem value={"OCE"}>OCE</MenuItem>
+              <MenuItem value={"TR"}>TR</MenuItem>
+              <MenuItem value={"LAN"}>LAN</MenuItem>
+              <MenuItem value={"LAS"}>LAS</MenuItem>
+            </RegionDropdown>
+            <Divider className={classes.divider} orientation="vertical" />
+            <InputBase
+              className={classes.input}
+              placeholder="Name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-          </form>
+            <IconButton
+              type="submit"
+              className={classes.iconButton}
+              onClick={() => window.location.href ="/insights/" + "na" + "/" + props.name}
+            >
+              <SearchIcon />
+            </IconButton>
+          </Paper>
         </SearchContainer>
       </ContentContainer>
     </HeaderContainer>
@@ -36,7 +108,7 @@ const SearchHeader = (props) => {
 };
 
 const HeaderContainer = styled.div`
-  background: linear-gradient(to right,#635bff 0%,#003ab9 50%, #0273e6 100%);
+  background: linear-gradient(to right, #635bff 0%, #003ab9 50%, #0273e6 100%);
   flex-direction: row;
   display: flex;
   min-width: inherit;
@@ -45,7 +117,7 @@ const HeaderContainer = styled.div`
 
 const ContentContainer = styled.div`
   background: inherit;
-  margin: 10px 20px;
+  margin: 5px 20px;
   width: 100%;
   flex-direction: row;
   display: flex;
@@ -59,13 +131,13 @@ const LogoContainer = styled.div`
 const SearchContainer = styled.div`
   margin-left: auto;
   align-self: center;
+  z-index: 999;
 `;
 
-const CustomTextField = withStyles({
+const RegionDropdown = withStyles({
   root: {
-    margin: 0,
-    "background-color": "#e8eaf1",
+    marginLeft: "7px",
   },
-})(TextField);
+})(Select);
 
 export default SearchHeader;
