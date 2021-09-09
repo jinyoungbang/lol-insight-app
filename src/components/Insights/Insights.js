@@ -8,26 +8,50 @@ import UserInfoHeader from "./components/UserInfoHeader";
 import InfoInsight from "./components/InfoInsight";
 import Ads from "./components/Ads";
 import UserNotFound from "./components/UserNotFound";
+import BackgroundOverlay from "../BackgroundOverlay";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import validateAndConvertRegion from "./functions";
+
+const changeDataFormat = (data) => {
+  var modifiedData = [];
+  console.log(data);
+  var statsToIterate = Object.keys(data[0]);
+  statsToIterate.forEach(async (stat) => {
+    var dataToAppend = [];
+    for (var i = 0; i < data.length; i++) {
+      dataToAppend.push(data[i][stat]);
+    }
+    modifiedData.push({
+      statsName: stat,
+      data: dataToAppend,
+    });
+  });
+  return modifiedData;
+};
 
 const Insights = () => {
   const userEndpoint = "find-user-info";
   const matchEndpoint = "find-insights";
-  const { region, name } = useParams();
+  var { region, name } = useParams();
+  region = region.toLowerCase();
+
   const [userExists, setUserExists] = useState(null);
-  const [matchDataExists, setMatchDataExists] = useState(null);
   const [userData, setUserData] = useState({});
+  const [matchDataExists, setMatchDataExists] = useState(null);
+  const [matchData, setMatchData] = useState([]);
+  
   useEffect(() => {
     getUserInfo();
+    getMatchInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUserInfo = () => {
+    const regionEndpoint = validateAndConvertRegion(region);
     axios
-      .get(`${process.env.REACT_APP_SERVER}${userEndpoint}/${region}/${name}`)
+      .get(`${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`)
       .then((res) => {
-        console.log(res.data);
         if (res.data.status) {
           setUserExists(true);
           setUserData(res.data.info);
@@ -35,49 +59,70 @@ const Insights = () => {
           setUserExists(false);
           return;
         }
-      })
-      .then(() => {
-        axios
-          .get(
-            `${process.env.REACT_APP_SERVER}${matchEndpoint}/${region}/${name}`
-          )
-          .then((res) => {
-            res.data.length > 0
-              ? setMatchDataExists(true)
-              : setMatchDataExists(false);
-          });
       });
     return;
   };
 
+  const getMatchInfo = () => {
+    const regionEndpoint = validateAndConvertRegion(region);
+    axios
+      .get(`${process.env.REACT_APP_SERVER}${matchEndpoint}/${regionEndpoint}/${name}`)
+      .then((res) => {
+        if (res.data.length > 0) {
+          setMatchDataExists(true);
+          setMatchData(changeDataFormat(res.data));
+        } else {
+          setMatchDataExists(false);
+        }
+      });
+  };
+
   return (
     <Container>
-      <SearchHeader />
+      <BackgroundOverlay color="#f5f9fc" />
+      <SearchHeader region={region} name={name} />
       {userExists === null || matchDataExists === null ? (
-        <CircularProgress />
+        <CircularProgressContainer>
+          <CircularProgress size={40} />
+        </CircularProgressContainer>
       ) : matchDataExists ? (
         <div>
           <UserInfoHeader region={region} name={userData.name} />
           <Ads />
-          <InfoInsight />
+          <InfoInsight data={matchData} />
         </div>
       ) : userExists ? (
         "no match data"
       ) : (
-        "user doesn't exist"
+        <UserNotFound />
       )}
+      {/* <Footer /> */}
     </Container>
   );
 };
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   flex-direction: row;
   height: 100%;
   margin: 0 auto;
   min-width: 970px;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 `;
+
+const CircularProgressContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+`;
+
+// const CustomCircularProgress = withStyles({
+//   root: {
+//     width: "100px",
+//     height: "100px"
+//   },
+// })(CircularProgress);
 
 export default Insights;

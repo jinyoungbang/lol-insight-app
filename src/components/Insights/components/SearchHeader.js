@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -8,6 +8,10 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+
+import { Redirect } from "react-router-dom";
+
+import validateAndConvertRegion from "../functions";
 // import DirectionsIcon from "@material-ui/icons/Directions";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +39,24 @@ const useStyles = makeStyles((theme) => ({
 const SearchHeader = (props) => {
   const classes = useStyles();
 
-  const [region, setRegion] = useState("NA");
+  const [region, setRegion] = useState("");
   const [name, setName] = useState("");
+
+
+  const searchName = () => {
+    console.log(name);
+    const regionConverted = validateAndConvertRegion(props.region);
+    if (regionConverted["status"]) {
+      (window.location.href =
+        "/insights/" + regionConverted["region"] + "/" + props.name);
+    }
+  };
+
+  useEffect(() => {
+    console.log(props.region);
+    setRegion(props.region.toUpperCase());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <HeaderContainer>
@@ -76,7 +96,7 @@ const SearchHeader = (props) => {
             <IconButton
               type="submit"
               className={classes.iconButton}
-              aria-label="search"
+              onClick={() => window.location.href ="/insights/" + "na" + "/" + props.name}
             >
               <SearchIcon />
             </IconButton>
@@ -116,7 +136,7 @@ const SearchContainer = styled.div`
 
 const RegionDropdown = withStyles({
   root: {
-    marginLeft: "7px"
+    marginLeft: "7px",
   },
 })(Select);
 
