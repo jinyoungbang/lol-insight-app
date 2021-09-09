@@ -1,83 +1,81 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Typography, Button, Paper } from '@material-ui/core'
-import { createStyles, createTheme, ThemeProvider } from "@material-ui/core/styles";
-import RegionDropdown from './components/RegionDropdown';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  createStyles,
+  createTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+
+import BackgroundOverlay from "../BackgroundOverlay";
+import styled from "styled-components";
+import SearchBar from "./components/SearchBar";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#5680E9'
+      main: "#5680E9",
     },
     secondary: {
-      light: '#84CEEB',
-      main: '#5AB9EA'
-    }
-  }
-})
+      light: "#84CEEB",
+      main: "#5AB9EA",
+    },
+  },
+});
 
-const useStyles = makeStyles((theme) => 
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      marginTop: '15%',
-    },
-    body: {
-      display: 'flex',
-      background: theme.palette.primary.main,
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '50%',
-      margin: '0 auto',
-      padding: theme.spacing(2)
+      width: "100%",
+      flexDirection: "row",
+      height: "100%",
+      margin: "0 auto",
+      minHeight: "100%",
+      minWidth: "970px",
+      position: "relative",
+      overflowX: "hidden",
     },
     textfield: {
       margin: theme.spacing(1),
-      width: '50%'
+      width: "50%",
     },
     dropdown: {
       margin: theme.spacing(1),
-      width: '100%'
+      width: "100%",
     },
     button: {
       margin: theme.spacing(1),
-      height: '100%'
-    }
-  }
-))
+      height: "100%",
+    },
+    logo: {
+      marginTop: "200px",
+      marginBottom: "50px",
+    },
+    searchBar: {
+      marginBottom: "200px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: "0 auto",
+      flexDirection: "row",
+    },
+  })
+);
 
 const Home = () => {
-  const [name, setName] = useState("");
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
+      <BackgroundOverlay color="#635bff" />
       <div className={classes.root}>
-        <div className={classes.heading}>
-          <Typography variant='h1' gutterBottom>lol-insight-api</Typography>
+        <div className={classes.logo}>
+          Logo Here
+          <h1>Daiv.app</h1>
         </div>
-        <Paper
-          className={classes.body}
-          elevation={3}
-        >
-          <TextField
-            className={classes.textfield}
-            label="Search Player Name"
-            id="mui-theme-provider-outlined-input"
-          />
-          <RegionDropdown
-            className={classes.dropdown}
-          />
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            size="large"
-          >
-            Search
-          </Button>
-        </Paper>
+        <div className={classes.searchBar}>
+          <SearchBar />
+        </div>
       </div>
     </ThemeProvider>
-    
   );
 };
 
