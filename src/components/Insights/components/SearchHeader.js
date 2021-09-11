@@ -8,10 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-
-import { Redirect } from "react-router-dom";
-
-import validateAndConvertRegion from "../functions";
 // import DirectionsIcon from "@material-ui/icons/Directions";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
+  logoImage: {
+    height: "40px",
+    marginLeft: "-12px",
+    marginBottom: "-2px",
+  },
 }));
 
 const SearchHeader = (props) => {
@@ -41,16 +42,6 @@ const SearchHeader = (props) => {
 
   const [region, setRegion] = useState("");
   const [name, setName] = useState("");
-
-
-  const searchName = () => {
-    console.log(name);
-    const regionConverted = validateAndConvertRegion(props.region);
-    if (regionConverted["status"]) {
-      (window.location.href =
-        "/insights/" + regionConverted["region"] + "/" + props.name);
-    }
-  };
 
   useEffect(() => {
     console.log(props.region);
@@ -62,45 +53,51 @@ const SearchHeader = (props) => {
     <HeaderContainer>
       <ContentContainer>
         <LogoContainer>
-          {/* <img src={"/logo.png"} /> */}
-          Logo Here
+          <img
+            className={classes.logoImage}
+            src={"/searchbar-logo.png"}
+            onClick={() => (window.location.href = "/")}
+            alt="Daiv Logo"
+          />
         </LogoContainer>
         <SearchContainer>
-          <Paper component="form" className={classes.root}>
-            <RegionDropdown
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
-              displayEmpty
-              className={classes.selectEmpty}
-              disableUnderline
-            >
-              <MenuItem value={"NA"}>NA</MenuItem>
-              <MenuItem value={"EUW"}>EUW</MenuItem>
-              <MenuItem value={"EUN"}>EUN</MenuItem>
-              <MenuItem value={"KR"}>KR</MenuItem>
-              <MenuItem value={"BR"}>BR</MenuItem>
-              <MenuItem value={"JP"}>JP</MenuItem>
-              <MenuItem value={"RU"}>RU</MenuItem>
-              <MenuItem value={"OCE"}>OCE</MenuItem>
-              <MenuItem value={"TR"}>TR</MenuItem>
-              <MenuItem value={"LAN"}>LAN</MenuItem>
-              <MenuItem value={"LAS"}>LAS</MenuItem>
-            </RegionDropdown>
-            <Divider className={classes.divider} orientation="vertical" />
-            <InputBase
-              className={classes.input}
-              placeholder="Name..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <IconButton
-              type="submit"
-              className={classes.iconButton}
-              onClick={() => window.location.href ="/insights/" + "na" + "/" + props.name}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Paper>
+          <form target="_blank">
+            <Paper className={classes.root}>
+              <RegionDropdown
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                displayEmpty
+                className={classes.selectEmpty}
+                disableUnderline
+              >
+                <MenuItem value={"NA"}>NA</MenuItem>
+                <MenuItem value={"EUW"}>EUW</MenuItem>
+                <MenuItem value={"EUN"}>EUN</MenuItem>
+                <MenuItem value={"KR"}>KR</MenuItem>
+                <MenuItem value={"BR"}>BR</MenuItem>
+                <MenuItem value={"JP"}>JP</MenuItem>
+                <MenuItem value={"RU"}>RU</MenuItem>
+                <MenuItem value={"OCE"}>OCE</MenuItem>
+                <MenuItem value={"TR"}>TR</MenuItem>
+                <MenuItem value={"LAN"}>LAN</MenuItem>
+                <MenuItem value={"LAS"}>LAS</MenuItem>
+              </RegionDropdown>
+              <Divider className={classes.divider} orientation="vertical" />
+              <InputBase
+                className={classes.input}
+                placeholder="Name..."
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <IconButton
+                type="submit"
+                className={classes.iconButton}
+                onClick={() => window.location.href = "/insights/" + region + "/" + name}
+              >
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </form>
         </SearchContainer>
       </ContentContainer>
     </HeaderContainer>

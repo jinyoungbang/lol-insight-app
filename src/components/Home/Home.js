@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createStyles,
@@ -74,10 +74,14 @@ const Home = () => {
       <BackgroundOverlay color="#635bff" />
       <div className={classes.root}>
         <div className={classes.logo}>
-          <img className={classes.logoImage} src={"/headerlogo-cut.png"} />
+          <img
+            className={classes.logoImage}
+            src={"/headerlogo-cut.png"}
+            alt="Daiv Logo"
+          />
         </div>
         <div className={classes.textField}>
-          <SubText>Insights Visualization Platform</SubText>
+          <SubText>Insights Visualization Platform – Daiv into your statistics!</SubText>
         </div>
         <div className={classes.searchBar}>
           <SearchBar />
