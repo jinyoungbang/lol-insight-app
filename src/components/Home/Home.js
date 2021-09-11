@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createStyles,
@@ -47,7 +47,13 @@ const useStyles = makeStyles((theme) =>
       height: "100%",
     },
     logo: {
-      marginTop: "200px",
+      marginTop: "100px",
+      marginBottom: "-50px",
+    },
+    logoImage: {
+      height: "250px",
+    },
+    textField: {
       marginBottom: "50px",
     },
     searchBar: {
@@ -68,8 +74,14 @@ const Home = () => {
       <BackgroundOverlay color="#635bff" />
       <div className={classes.root}>
         <div className={classes.logo}>
-          Logo Here
-          <h1>Daiv.app</h1>
+          <img
+            className={classes.logoImage}
+            src={"/headerlogo-cut.png"}
+            alt="Daiv Logo"
+          />
+        </div>
+        <div className={classes.textField}>
+          <SubText>Insights Visualization Platform – Daiv into your statistics!</SubText>
         </div>
         <div className={classes.searchBar}>
           <SearchBar />
@@ -78,5 +90,12 @@ const Home = () => {
     </ThemeProvider>
   );
 };
+
+const SubText = styled.div`
+  font-family: "Inter", sans-serif;
+  color: #fcf7ff;
+  font-size: 18px;
+  font-weight: 300;
+`;
 
 export default Home;

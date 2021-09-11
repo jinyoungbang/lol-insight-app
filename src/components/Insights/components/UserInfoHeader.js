@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const UserInfoHeader = (props) => {
@@ -15,11 +15,12 @@ const UserInfoHeader = (props) => {
             src={
               "https://static.u.gg/assets/lol/riot_static/11.16.1/img/profileicon/746.png"
             }
+            alt="Summoner Icon"
           />
         </ProfileBorder>
         <ProfileInfo>
           <ProfileInfoTitle>{props.name}</ProfileInfoTitle>
-          <ProfileInfoSubtitle>Level 64 | {props.region}</ProfileInfoSubtitle>
+          <ProfileInfoSubtitle>Level {props.level}</ProfileInfoSubtitle>
         </ProfileInfo>
       </ContentContainer>
     </HeaderContainer>
@@ -65,15 +66,15 @@ const ProfileInfoTitle = styled.div`
   align-items: center;
   justify-content: left;
   overflow: hidden;
-  font-family: Source Sans Pro;
+  font-family: "Inter", sans-serif;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 300;
 `;
 
 const ProfileInfoSubtitle = styled.div`
   display: flex;
   align-items: center;
-  font-family: Source Sans Pro;
+  font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 300;
 `;

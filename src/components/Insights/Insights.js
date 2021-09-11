@@ -40,7 +40,7 @@ const Insights = () => {
   const [userData, setUserData] = useState({});
   const [matchDataExists, setMatchDataExists] = useState(null);
   const [matchData, setMatchData] = useState([]);
-  
+
   useEffect(() => {
     getUserInfo();
     getMatchInfo();
@@ -50,10 +50,13 @@ const Insights = () => {
   const getUserInfo = () => {
     const regionEndpoint = validateAndConvertRegion(region);
     axios
-      .get(`${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`)
+      .get(
+        `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
+      )
       .then((res) => {
         if (res.data.status) {
           setUserExists(true);
+          console.log(res.data.info);
           setUserData(res.data.info);
         } else {
           setUserExists(false);
@@ -66,7 +69,9 @@ const Insights = () => {
   const getMatchInfo = () => {
     const regionEndpoint = validateAndConvertRegion(region);
     axios
-      .get(`${process.env.REACT_APP_SERVER}${matchEndpoint}/${regionEndpoint}/${name}`)
+      .get(
+        `${process.env.REACT_APP_SERVER}${matchEndpoint}/${regionEndpoint}/${name}`
+      )
       .then((res) => {
         if (res.data.length > 0) {
           setMatchDataExists(true);
@@ -87,7 +92,12 @@ const Insights = () => {
         </CircularProgressContainer>
       ) : matchDataExists ? (
         <div>
-          <UserInfoHeader region={region} name={userData.name} />
+          <UserInfoHeader
+            region={region}
+            name={userData["name"]}
+            level={userData["summonerLevel"]}
+            profileIconId={userData["profileIconId"]}
+          />
           <Ads />
           <InfoInsight data={matchData} />
         </div>
