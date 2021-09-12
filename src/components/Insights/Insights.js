@@ -5,13 +5,13 @@ import axios from "axios";
 
 import SearchHeader from "./components/SearchHeader";
 import UserInfoHeader from "./components/UserInfoHeader";
-import InfoInsight from "./components/InfoInsight";
 import Ads from "./components/Ads";
 import UserNotFound from "./components/UserNotFound";
 import BackgroundOverlay from "../BackgroundOverlay";
+import UserSummary from "./components/UserSummary";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
-import validateAndConvertRegion from "./functions";
+import validateAndConvertRegion from "./helpers/functions";
 
 const changeDataFormat = (data) => {
   var modifiedData = [];
@@ -56,7 +56,6 @@ const Insights = () => {
       .then((res) => {
         if (res.data.status) {
           setUserExists(true);
-          console.log(res.data.info);
           setUserData(res.data.info);
         } else {
           setUserExists(false);
@@ -99,12 +98,13 @@ const Insights = () => {
             profileIconId={userData["profileIconId"]}
           />
           <Ads />
-          <InfoInsight data={matchData} />
+          <UserSummary data={matchData} />
+          {/* <InfoInsight data={matchData} /> */}
         </div>
       ) : userExists ? (
         "no match data"
       ) : (
-        <UserNotFound />
+        <UserNotFound/>
       )}
       {/* <Footer /> */}
     </Container>
@@ -122,7 +122,7 @@ const Container = styled.div`
 `;
 
 const CircularProgressContainer = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100%;
   top: 50%;
   left: 50%;

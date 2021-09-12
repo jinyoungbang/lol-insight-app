@@ -44,7 +44,6 @@ const SearchHeader = (props) => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    console.log(props.region);
     setRegion(props.region.toUpperCase());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -92,7 +91,9 @@ const SearchHeader = (props) => {
               <IconButton
                 type="submit"
                 className={classes.iconButton}
-                onClick={() => window.location.href = "/insights/" + region + "/" + name}
+                onClick={() =>
+                  (window.location.href = "/insights/" + region + "/" + name)
+                }
               >
                 <SearchIcon />
               </IconButton>

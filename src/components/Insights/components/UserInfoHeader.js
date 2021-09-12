@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const UserInfoHeader = (props) => {
-
   return (
     <HeaderContainer>
       <ContentContainer>
@@ -13,13 +12,14 @@ const UserInfoHeader = (props) => {
               width: "100%",
             }}
             src={
-              "https://static.u.gg/assets/lol/riot_static/11.16.1/img/profileicon/746.png"
+              `${process.env.REACT_APP_ASSETS_ENDPOINT}img/profileicon/${props.profileIconId}.png`
             }
             alt="Summoner Icon"
           />
         </ProfileBorder>
         <ProfileInfo>
           <ProfileInfoTitle>{props.name}</ProfileInfoTitle>
+          <ProfileInfoRankText>Gold IV</ProfileInfoRankText>
           <ProfileInfoSubtitle>Level {props.level}</ProfileInfoSubtitle>
         </ProfileInfo>
       </ContentContainer>
@@ -36,7 +36,7 @@ const HeaderContainer = styled.div`
 
 const ContentContainer = styled.div`
   background: inherit;
-  margin: 0 100px;
+  margin: 0 175px;
   width: 100%;
   flex-direction: row;
   display: flex;
@@ -45,7 +45,7 @@ const ContentContainer = styled.div`
 
 const ProfileBorder = styled.div`
   position: relative;
-  border: 2px solid #17172e;
+  border: 1px solid #1D1A27;
   border-radius: 4px;
   height: 80px;
   width: 80px;
@@ -62,21 +62,32 @@ const ProfileInfo = styled.div`
 `;
 
 const ProfileInfoTitle = styled.div`
+  color: #1D1A27;
   display: flex;
   align-items: center;
   justify-content: left;
   overflow: hidden;
-  font-family: "Inter", sans-serif;
-  font-size: 40px;
-  font-weight: 300;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+`;
+
+const ProfileInfoRankText = styled.div`
+  color: #635BFF;
+  display: flex;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const ProfileInfoSubtitle = styled.div`
+  color: #1D1A27;
   display: flex;
   align-items: center;
-  font-family: "Inter", sans-serif;
-  font-size: 18px;
-  font-weight: 300;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
 `;
 
 export default UserInfoHeader;
