@@ -9,6 +9,7 @@ import {
 import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import SearchBar from "./components/SearchBar";
+import Footer from "./components/Footer";
 
 const theme = createTheme({
   palette: {
@@ -86,6 +87,7 @@ const Home = () => {
         <div className={classes.searchBar}>
           <SearchBar />
         </div>
+        <Footer/>
       </div>
     </ThemeProvider>
   );
