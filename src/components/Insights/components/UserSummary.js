@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 import InfoInsight from "../components/InfoInsight";
@@ -11,7 +11,7 @@ const useStyles = makeStyles(() =>
       flexDirection: "row",
       alignItems: "flex-start",
       margin: "0 150px",
-    //   minWidth: "100%"
+      //   minWidth: "100%"
     },
     userPersonalInfo: {
       display: "flex",
@@ -19,29 +19,41 @@ const useStyles = makeStyles(() =>
       minWidth: "270px",
       margin: "0 20px",
       justifyContent: "space-between",
-    //   maxWidth: "150px"
+      //   maxWidth: "150px"
     },
     userMatchInfo: {
-        marginLeft: "auto",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        minWidth: "500px"
+      marginLeft: "auto",
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      width: "100%",
+      minWidth: "500px",
     },
   })
 );
 
 const UserSummary = (props) => {
   const classes = useStyles();
+  const [dataToRender, setDataToRender] = useState([]);
+
+  useEffect(() => {
+    setDataToRender(props.data);
+    console.log(props.data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    console.log(event.target.name);
+    // setDataToRender({ ...checkboxState, [event.target.name]: event.target.checked });
+  };
 
   return (
     <div className={classes.root}>
       <div className={classes.userPersonalInfo}>
-        <UserInsightsCheckbox />
+        <UserInsightsCheckbox data={dataToRender} handleChange={handleCheckboxChange} />
       </div>
       <div className={classes.userMatchInfo}>
-        <InfoInsight data={props.data} />
+        {<InfoInsight data={dataToRender} />}
       </div>
     </div>
   );

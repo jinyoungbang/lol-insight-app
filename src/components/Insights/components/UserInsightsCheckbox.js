@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import styled from "styled-components";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -15,12 +14,23 @@ const useStyles = makeStyles((theme) =>
     formControl: {
       margin: theme.spacing(3),
     },
+    formTitle: {
+      color: "#1D1A27",
+      fontFamily: "'Noto Sans KR', sans-serif",
+      fontWeight: "800",
+    },
   })
 );
 
-const UserProfile = (props) => {
+const UserInsightsCheckbox = (props) => {
+  useEffect(() => {
+    props.data.forEach((el, i) => {
+      console.log(el)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     dpm: true,
     kda: true,
     csPerMin: true,
@@ -47,80 +57,82 @@ const UserProfile = (props) => {
   return (
     <div>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Insights</FormLabel>
+        <FormLabel className={classes.formName} component="legend">
+          Insights
+        </FormLabel>
         <br></br>
         <FormGroup>
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={dpm}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="dpm"
                 style={{ color: "#635BFF" }}
               />
             }
             label="DMG per min"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={kda}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="kda"
                 style={{ color: "#635BFF" }}
               />
             }
             label="KDA"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={csPerMin}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="csPerMin"
                 style={{ color: "#635BFF" }}
               />
             }
             label="CS per min"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={visionScore}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="visionScore"
                 style={{ color: "#635BFF" }}
               />
             }
             label="Vision Score"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={visionWardsBought}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="visionWardsBought"
                 style={{ color: "#635BFF" }}
               />
             }
             label="Vision Wards Bought"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={wardsKilled}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="wardsKilled"
                 style={{ color: "#635BFF" }}
               />
             }
             label="Total Wards Killed"
           />
-          <FormControlLabel
+          <DaivFormControlLabel
             control={
               <Checkbox
                 checked={wardsPlaced}
-                onChange={handleChange}
+                onChange={props.handleChange}
                 name="wardsPlaced"
                 style={{ color: "#635BFF" }}
               />
@@ -133,39 +145,13 @@ const UserProfile = (props) => {
   );
 };
 
-// const DaivCheckbox = withStyles({
-//     root: {
-//       color: "#635BFF",
-//     },
-//   })(Checkbox);
+const DaivFormControlLabel = withStyles({
+  label: {
+    color: "#1D1A27",
+    fontFamily: "'Noto Sans KR', sans-serif",
+    fontWeight: "300",
+  },
+})(FormControlLabel);
 
-// const ProfileInfoTitle = styled.div`
-//   color: #1D1A27;
-//   display: flex;
-//   align-items: center;
-//   justify-content: left;
-//   overflow: hidden;
-//   font-family: 'Noto Sans KR', sans-serif;
-//   font-size: 34px;
-//   font-weight: 700;
-// `;
 
-// const ProfileInfoRankText = styled.div`
-//   color: #635BFF;
-//   display: flex;
-//   align-items: center;
-//   font-family: 'Noto Sans KR', sans-serif;
-//   font-size: 14px;
-//   font-weight: 600;
-// `;
-
-// const ProfileInfoSubtitle = styled.div`
-//   color: #1D1A27;
-//   display: flex;
-//   align-items: center;
-//   font-family: 'Noto Sans KR', sans-serif;
-//   font-size: 11px;
-//   font-weight: 400;
-// `;
-
-export default UserProfile;
+export default UserInsightsCheckbox;

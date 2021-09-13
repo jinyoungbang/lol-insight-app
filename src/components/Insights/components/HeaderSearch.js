@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchHeader = (props) => {
+const HeaderSearch = (props) => {
   const classes = useStyles();
 
   const [region, setRegion] = useState("");
@@ -138,4 +138,4 @@ const RegionDropdown = withStyles({
   },
 })(Select);
 
-export default SearchHeader;
+export default HeaderSearch;

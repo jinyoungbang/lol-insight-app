@@ -35,7 +35,7 @@ const InsightGraph = (props) => {
             <XAxis dataKey="name"  tick={false} />
             <YAxis />
             <Tooltip />
-            <Legend />
+            {/* <Legend /> */}
             <Line
               type="monotone"
               dataKey={props.data.statsName}

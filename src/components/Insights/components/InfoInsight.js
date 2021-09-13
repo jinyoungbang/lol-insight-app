@@ -59,9 +59,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfoInsight = (props) => {
-  console.log(props.data);
   const classes = useStyles();
+  var dataToRender = props.data
   const [value, setValue] = React.useState(0);
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -76,17 +77,22 @@ const InfoInsight = (props) => {
             aria-label="ant example"
           >
             <AntTab label="Overall" />
-            <AntTab label="Top" disabled={true} />
-            <AntTab label="JG" disabled={true}/>
+            <AntTab label="Coming Soon..." disabled={true} />
+            {/* <AntTab label="JG" disabled={true}/>
             <AntTab label="Mid" disabled={true}/>
             <AntTab label="ADC" disabled={true}/>
-            <AntTab label="Sup" disabled={true}/>
+            <AntTab label="Sup" disabled={true}/> */}
           </AntTabs>
           <Typography className={classes.padding} />
         </div>
-        {props.data.map((data, i) => (
+        {dataToRender.filter(function(obj) {
+          return obj.toRender;
+        }).map((data, i) => (
           <InsightGraph key={i} data={data} />
         ))}
+        {/* {props.data.map((data, i) => (
+          <InsightGraph key={i} data={data} />
+        ))} */}
       </GraphContainer>
     </InfoInsightContainer>
   );
