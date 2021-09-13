@@ -5,7 +5,6 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
@@ -15,11 +14,11 @@ import {
 
 const InsightGraph = (props) => {
   const data = props.data.data.map((val, i) => ({
-    "name": "Match " + i.toString()
-  }))
-  console.log(data);
+    "name": "Most Recent Match #" + i.toString(),
+    [props.data.statsName]: val
+  })).reverse();
+
   return (
-    <InsightGraphContainer>
       <ContentContainer>
         <ResponsiveContainer  width="100%">
           <LineChart
@@ -33,11 +32,10 @@ const InsightGraph = (props) => {
               bottom: 5,
             }}
           >
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-            <XAxis dataKey="name" />
+            <XAxis dataKey="name"  tick={false} />
             <YAxis />
             <Tooltip />
-            <Legend />
+            {/* <Legend /> */}
             <Line
               type="monotone"
               dataKey={props.data.statsName}
@@ -48,19 +46,13 @@ const InsightGraph = (props) => {
           </LineChart>
         </ResponsiveContainer>
       </ContentContainer>
-    </InsightGraphContainer>
   );
 };
 
-const InsightGraphContainer = styled.div`
-  flex-direction: row;
-  display: flex;
-`;
-
 const ContentContainer = styled.div`
-  margin: 0 100px;
-  width: 100%;
-  height: 200px;
+  width: 95%;
+  min-width: 70%;
+  height: 150px;
   flex-direction: row;
   display: flex;
 `;

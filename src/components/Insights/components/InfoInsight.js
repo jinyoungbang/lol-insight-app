@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -59,30 +59,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfoInsight = (props) => {
-  // const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
+  const classes = useStyles();
+  var dataToRender = props.data
+  const [value, setValue] = React.useState(0);
+  
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <InfoInsightContainer>
       <GraphContainer>
-        {/* <div className={classes.demo1}>
+        <div className={classes.demo1}>
           <AntTabs
             value={value}
             onChange={handleChange}
             aria-label="ant example"
           >
             <AntTab label="Overall" />
-            <AntTab label="ADC" />
-            <AntTab label="Top" />
+            <AntTab label="Coming Soon..." disabled={true} />
+            {/* <AntTab label="JG" disabled={true}/>
+            <AntTab label="Mid" disabled={true}/>
+            <AntTab label="ADC" disabled={true}/>
+            <AntTab label="Sup" disabled={true}/> */}
           </AntTabs>
           <Typography className={classes.padding} />
-        </div> */}
-        {props.data.map((data, i) => (
+        </div>
+        {dataToRender.filter(function(obj) {
+          return obj.toRender;
+        }).map((data, i) => (
           <InsightGraph key={i} data={data} />
         ))}
+        {/* {props.data.map((data, i) => (
+          <InsightGraph key={i} data={data} />
+        ))} */}
       </GraphContainer>
     </InfoInsightContainer>
   );
@@ -90,13 +100,12 @@ const InfoInsight = (props) => {
 
 const InfoInsightContainer = styled.div`
   background: #f5f9fc;
-  flex-direction: row;
-  display: flex;
+  width: "90%";
 `;
 
 const GraphContainer = styled.div`
   flex-grow: 1;
-  margin: 0 150px;
+  marginRight: 50px;
 `;
 
 export default InfoInsight;

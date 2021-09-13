@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
+  makeStyles,
   createStyles,
   createTheme,
   ThemeProvider,
@@ -9,6 +9,7 @@ import {
 import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import SearchBar from "./components/SearchBar";
+import { Edit } from "@material-ui/icons";
 
 const theme = createTheme({
   palette: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) =>
     },
     logo: {
       marginTop: "100px",
-      marginBottom: "-50px",
+      marginBottom: "-20px",
     },
     logoImage: {
       height: "250px",
@@ -76,7 +77,7 @@ const Home = () => {
         <div className={classes.logo}>
           <img
             className={classes.logoImage}
-            src={"/headerlogo-cut.png"}
+            src={"/logo-beta.png"}
             alt="Daiv Logo"
           />
         </div>
