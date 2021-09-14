@@ -60,40 +60,50 @@ const useStyles = makeStyles((theme) => ({
 
 const InfoInsight = (props) => {
   const classes = useStyles();
-  var dataToRender = props.data
+
   const [value, setValue] = React.useState(0);
-  
+  const [insightsToRender, setInsightsToRender] = React.useState(
+    props.data.filter(function (obj) {
+      return obj.toRender;
+    })
+  );
+
+  React.useEffect(() => {
+    setInsightsToRender(
+      props.data.filter(function (obj) {
+        return obj.toRender;
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <InfoInsightContainer>
-      <GraphContainer>
-        <div className={classes.demo1}>
-          <AntTabs
-            value={value}
-            onChange={handleChange}
-            aria-label="ant example"
-          >
-            <AntTab label="Overall" />
-            <AntTab label="Coming Soon..." disabled={true} />
-            {/* <AntTab label="JG" disabled={true}/>
+      {insightsToRender && (
+        <GraphContainer>
+          <div className={classes.demo1}>
+            <AntTabs
+              value={value}
+              onChange={handleChange}
+              aria-label="ant example"
+            >
+              <AntTab label="Overall" />
+              <AntTab label="Coming Soon..." disabled={true} />
+              {/* <AntTab label="JG" disabled={true}/>
             <AntTab label="Mid" disabled={true}/>
             <AntTab label="ADC" disabled={true}/>
             <AntTab label="Sup" disabled={true}/> */}
-          </AntTabs>
-          <Typography className={classes.padding} />
-        </div>
-        {dataToRender.filter(function(obj) {
-          return obj.toRender;
-        }).map((data, i) => (
+            </AntTabs>
+            <Typography className={classes.padding} />
+          </div>
+          {props.data.filter(d => d.toRender).map((data, i) => (
           <InsightGraph key={i} data={data} />
         ))}
-        {/* {props.data.map((data, i) => (
-          <InsightGraph key={i} data={data} />
-        ))} */}
-      </GraphContainer>
+        </GraphContainer>
+      )}
     </InfoInsightContainer>
   );
 };
@@ -105,7 +115,7 @@ const InfoInsightContainer = styled.div`
 
 const GraphContainer = styled.div`
   flex-grow: 1;
-  marginRight: 50px;
+  marginright: 50px;
 `;
 
 export default InfoInsight;

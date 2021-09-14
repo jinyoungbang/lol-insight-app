@@ -8,7 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-// import DirectionsIcon from "@material-ui/icons/Directions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +59,13 @@ const HeaderSearch = (props) => {
           />
         </LogoContainer>
         <SearchContainer>
-          <form target="_blank">
+          <form
+            target="_self"
+            onSubmit={(event) => {
+              event.preventDefault();
+              window.location.href = "/insights/" + region + "/" + name;
+            }}
+          >
             <Paper className={classes.root}>
               <RegionDropdown
                 value={region}
@@ -91,9 +96,6 @@ const HeaderSearch = (props) => {
               <IconButton
                 type="submit"
                 className={classes.iconButton}
-                onClick={() =>
-                  (window.location.href = "/insights/" + region + "/" + name)
-                }
               >
                 <SearchIcon />
               </IconButton>

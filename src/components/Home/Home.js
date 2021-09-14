@@ -9,7 +9,6 @@ import {
 import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import SearchBar from "./components/SearchBar";
-import { Edit } from "@material-ui/icons";
 
 const theme = createTheme({
   palette: {

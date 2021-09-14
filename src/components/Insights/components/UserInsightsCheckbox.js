@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -23,36 +23,8 @@ const useStyles = makeStyles((theme) =>
 );
 
 const UserInsightsCheckbox = (props) => {
-  useEffect(() => {
-    props.data.forEach((el, i) => {
-      console.log(el)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log(props.data);
   const classes = useStyles();
-  const [state, setState] = useState({
-    dpm: true,
-    kda: true,
-    csPerMin: true,
-    visionScore: true,
-    visionWardsBought: false,
-    wardsKilled: false,
-    wardsPlaced: false,
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  const {
-    dpm,
-    kda,
-    csPerMin,
-    visionScore,
-    visionWardsBought,
-    wardsKilled,
-    wardsPlaced,
-  } = state;
 
   return (
     <div>
@@ -65,7 +37,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={dpm}
+                checked={props.data[0].toRender}
                 onChange={props.handleChange}
                 name="dpm"
                 style={{ color: "#635BFF" }}
@@ -76,7 +48,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={kda}
+                checked={props.data[1].toRender}
                 onChange={props.handleChange}
                 name="kda"
                 style={{ color: "#635BFF" }}
@@ -87,7 +59,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={csPerMin}
+                checked={props.data[2].toRender}
                 onChange={props.handleChange}
                 name="csPerMin"
                 style={{ color: "#635BFF" }}
@@ -98,7 +70,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={visionScore}
+                checked={props.data[3].toRender}
                 onChange={props.handleChange}
                 name="visionScore"
                 style={{ color: "#635BFF" }}
@@ -109,7 +81,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={visionWardsBought}
+                checked={props.data[4].toRender}
                 onChange={props.handleChange}
                 name="visionWardsBought"
                 style={{ color: "#635BFF" }}
@@ -120,7 +92,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={wardsKilled}
+                checked={props.data[5].toRender}
                 onChange={props.handleChange}
                 name="wardsKilled"
                 style={{ color: "#635BFF" }}
@@ -131,7 +103,7 @@ const UserInsightsCheckbox = (props) => {
           <DaivFormControlLabel
             control={
               <Checkbox
-                checked={wardsPlaced}
+                checked={props.data[6].toRender}
                 onChange={props.handleChange}
                 name="wardsPlaced"
                 style={{ color: "#635BFF" }}
@@ -152,6 +124,5 @@ const DaivFormControlLabel = withStyles({
     fontWeight: "300",
   },
 })(FormControlLabel);
-
 
 export default UserInsightsCheckbox;

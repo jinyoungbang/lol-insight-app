@@ -28,7 +28,13 @@ const SearchBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <form target="_blank">
+      <form
+        target="_self"
+        onSubmit={(event) => {
+          event.preventDefault();
+          window.location.href = "/insights/" + region + "/" + name;
+        }}
+      >
         <Paper className={classes.searchStyle}>
           <div>
             <CustomInput
@@ -63,9 +69,9 @@ const SearchBar = () => {
             <IconButton
               type="submit"
               className={classes.iconButton}
-              onClick={() =>
-                (window.location.href = "/insights/" + region + "/" + name)
-              }
+              // onClick={() =>
+              //   (window.location.href = "/insights/" + region + "/" + name)
+              // }
             >
               <SearchIcon />
             </IconButton>
