@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -59,44 +59,63 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfoInsight = (props) => {
-  // const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
+  const classes = useStyles();
+
+  const [value, setValue] = React.useState(0);
+  const [insightsToRender, setInsightsToRender] = React.useState(
+    props.data.filter(function (obj) {
+      return obj.toRender;
+    })
+  );
+
+  React.useEffect(() => {
+    setInsightsToRender(
+      props.data.filter(function (obj) {
+        return obj.toRender;
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <InfoInsightContainer>
-      <GraphContainer>
-        {/* <div className={classes.demo1}>
-          <AntTabs
-            value={value}
-            onChange={handleChange}
-            aria-label="ant example"
-          >
-            <AntTab label="Overall" />
-            <AntTab label="ADC" />
-            <AntTab label="Top" />
-          </AntTabs>
-          <Typography className={classes.padding} />
-        </div> */}
-        {props.data.map((data, i) => (
+      {insightsToRender && (
+        <GraphContainer>
+          <div className={classes.demo1}>
+            <AntTabs
+              value={value}
+              onChange={handleChange}
+              aria-label="ant example"
+            >
+              <AntTab label="Overall" />
+              <AntTab label="Coming Soon..." disabled={true} />
+              {/* <AntTab label="JG" disabled={true}/>
+            <AntTab label="Mid" disabled={true}/>
+            <AntTab label="ADC" disabled={true}/>
+            <AntTab label="Sup" disabled={true}/> */}
+            </AntTabs>
+            <Typography className={classes.padding} />
+          </div>
+          {props.data.filter(d => d.toRender).map((data, i) => (
           <InsightGraph key={i} data={data} />
         ))}
-      </GraphContainer>
+        </GraphContainer>
+      )}
     </InfoInsightContainer>
   );
 };
 
 const InfoInsightContainer = styled.div`
   background: #f5f9fc;
-  flex-direction: row;
-  display: flex;
+  width: "90%";
 `;
 
 const GraphContainer = styled.div`
   flex-grow: 1;
-  margin: 0 150px;
+  marginright: 50px;
 `;
 
 export default InfoInsight;

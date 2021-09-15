@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Home from "./components/Home/Home"
 import Insights from './components/Insights/Insights'
 import PrivacyPolicy from "./components/Home/PrivacyPolicy";
+import UserNotFoundPage from "./components/Error/UserNotFoundPage";
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/privacy" component={PrivacyPolicy} />
+          <Route exact path="/insights/:region/" component={UserNotFoundPage} />
           <Route exact path="/insights/:region/:name" component={Insights} />
+          <Route component={Home} />
+          <Route path="/riot.txt" />
         </Switch>
       </div>
     </Router>

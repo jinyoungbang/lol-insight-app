@@ -2,25 +2,40 @@ import React from "react";
 import styled from "styled-components";
 
 const UserInfoHeader = (props) => {
-
   return (
     <HeaderContainer>
       <ContentContainer>
         <ProfileBorder>
+          <LevelContainer>{props.level}</LevelContainer>
           <img
             style={{
               height: "100%",
               width: "100%",
             }}
-            src={
-              "https://static.u.gg/assets/lol/riot_static/11.16.1/img/profileicon/746.png"
-            }
+            src={`${process.env.REACT_APP_ASSETS_ENDPOINT}img/profileicon/${props.profileIconId}.png`}
             alt="Summoner Icon"
           />
         </ProfileBorder>
         <ProfileInfo>
           <ProfileInfoTitle>{props.name}</ProfileInfoTitle>
-          <ProfileInfoSubtitle>Level {props.level}</ProfileInfoSubtitle>
+          {props.tier ? (
+            <div>
+              <ProfileInfoTierText>
+                {props.tier + " " + props.rank + " / " + props.lp + " LP"}{" "}
+              </ProfileInfoTierText>
+              <ProfileInfoSubtitle>
+                {"Win Ratio: " +
+                  props.winRate +
+                  "% / " +
+                  props.totalGamesPlayed +
+                  " games"}
+              </ProfileInfoSubtitle>
+            </div>
+          ) : (
+            <ProfileInfoTierText style={{marginBottom: "20px"}}>
+                Unranked
+              </ProfileInfoTierText>
+          )}
         </ProfileInfo>
       </ContentContainer>
     </HeaderContainer>
@@ -36,7 +51,7 @@ const HeaderContainer = styled.div`
 
 const ContentContainer = styled.div`
   background: inherit;
-  margin: 0 100px;
+  margin: 0 175px;
   width: 100%;
   flex-direction: row;
   display: flex;
@@ -45,12 +60,12 @@ const ContentContainer = styled.div`
 
 const ProfileBorder = styled.div`
   position: relative;
-  border: 2px solid #17172e;
+  border: 1px solid #1d1a27;
   border-radius: 4px;
   height: 80px;
   width: 80px;
   ${"" /* height: 100%; */}
-  overflow: hidden;
+  ${"" /* overflow: hidden; */}
 `;
 
 const ProfileInfo = styled.div`
@@ -62,21 +77,51 @@ const ProfileInfo = styled.div`
 `;
 
 const ProfileInfoTitle = styled.div`
+  color: #1d1a27;
   display: flex;
   align-items: center;
   justify-content: left;
   overflow: hidden;
-  font-family: "Inter", sans-serif;
-  font-size: 40px;
-  font-weight: 300;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+`;
+
+const ProfileInfoTierText = styled.div`
+  color: #635bff;
+  display: flex;
+  align-items: center;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const ProfileInfoSubtitle = styled.div`
+  color: #1d1a27;
   display: flex;
   align-items: center;
-  font-family: "Inter", sans-serif;
-  font-size: 18px;
-  font-weight: 300;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+`;
+
+const LevelContainer = styled.div`
+  position: absolute;
+  border: 1px solid #1d1a27;
+  border-radius: 4px;
+  z-index: 3;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 17px;
+  color: #fcf7ff;
+  background-color: #635bff;
+  font-size: 11px;
+  font-weight: 700;
 `;
 
 export default UserInfoHeader;

@@ -5,63 +5,65 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
-
-
 const InsightGraph = (props) => {
-  const data = props.data.data.map((val, i) => ({
-    "name": "Match " + i.toString()
-  }))
-  console.log(data);
+  const data = props.data.data
+    .map((val, i) => ({
+      name: "Most Recent Match #" + i.toString(),
+      [props.data.statsName]: val,
+    }))
+    .reverse();
+
   return (
-    <InsightGraphContainer>
-      <ContentContainer>
-        <ResponsiveContainer  width="100%">
-          <LineChart
-            width={500}
-            height={100}
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey={props.data.statsName}
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
-          </LineChart>
-        </ResponsiveContainer>
-      </ContentContainer>
-    </InsightGraphContainer>
+    <ContentContainer>
+      <GraphTitle>{props.data.statsNameForRender}</GraphTitle>
+      <ResponsiveContainer style={{ marginBottom: "20px" }} width="100%">
+        <LineChart
+          width={500}
+          height={100}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <XAxis dataKey="name" tick={false} />
+          <YAxis />
+          <Tooltip />
+          {/* <Legend /> */}
+          <Line
+            type="monotone"
+            dataKey={props.data.statsName}
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+        </LineChart>
+      </ResponsiveContainer>
+    </ContentContainer>
   );
 };
 
-const InsightGraphContainer = styled.div`
-  flex-direction: row;
-  display: flex;
+const GraphTitle = styled.div`
+  color: #635bff;
+  text-align: left;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 79px;
+  margin-bottom: 15px;
 `;
 
 const ContentContainer = styled.div`
-  margin: 0 100px;
-  width: 100%;
-  height: 200px;
-  flex-direction: row;
+  width: 95%;
+  min-width: 70%;
+  height: 150px;
+  flex-direction: column;
   display: flex;
 `;
 

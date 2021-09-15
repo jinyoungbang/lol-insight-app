@@ -3,47 +3,26 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import SearchHeader from "./components/SearchHeader";
+import HeaderSearch from "./components/HeaderSearch";
 import UserInfoHeader from "./components/UserInfoHeader";
-import InfoInsight from "./components/InfoInsight";
-import Ads from "./components/Ads";
 import UserNotFound from "./components/UserNotFound";
 import BackgroundOverlay from "../BackgroundOverlay";
+import UserSummary from "./components/UserSummary";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
-import validateAndConvertRegion from "./functions";
-
-const changeDataFormat = (data) => {
-  var modifiedData = [];
-  console.log(data);
-  var statsToIterate = Object.keys(data[0]);
-  statsToIterate.forEach(async (stat) => {
-    var dataToAppend = [];
-    for (var i = 0; i < data.length; i++) {
-      dataToAppend.push(data[i][stat]);
-    }
-    modifiedData.push({
-      statsName: stat,
-      data: dataToAppend,
-    });
-  });
-  return modifiedData;
-};
+import LoadingCircular from "./components/LoadingCircular";
+import { validateAndConvertRegion } from "./helpers/functions";
 
 const Insights = () => {
   const userEndpoint = "find-user-info";
-  const matchEndpoint = "find-insights";
   var { region, name } = useParams();
   region = region.toLowerCase();
 
   const [userExists, setUserExists] = useState(null);
   const [userData, setUserData] = useState({});
-  const [matchDataExists, setMatchDataExists] = useState(null);
-  const [matchData, setMatchData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getUserInfo();
-    getMatchInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -54,58 +33,50 @@ const Insights = () => {
         `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
       )
       .then((res) => {
+        console.log(res);
         if (res.data.status) {
           setUserExists(true);
-          console.log(res.data.info);
           setUserData(res.data.info);
+          setIsLoading(false);
         } else {
           setUserExists(false);
+          setIsLoading(false);
           return;
         }
       });
+
     return;
   };
 
-  const getMatchInfo = () => {
-    const regionEndpoint = validateAndConvertRegion(region);
-    axios
-      .get(
-        `${process.env.REACT_APP_SERVER}${matchEndpoint}/${regionEndpoint}/${name}`
-      )
-      .then((res) => {
-        if (res.data.length > 0) {
-          setMatchDataExists(true);
-          setMatchData(changeDataFormat(res.data));
-        } else {
-          setMatchDataExists(false);
-        }
-      });
-  };
+  if (isLoading) {
+    <Container>
+      <BackgroundOverlay color="#f5f9fc" />
+      <LoadingCircular />
+    </Container>
+  }
 
   return (
     <Container>
       <BackgroundOverlay color="#f5f9fc" />
-      <SearchHeader region={region} name={name} />
-      {userExists === null || matchDataExists === null ? (
-        <CircularProgressContainer>
-          <CircularProgress size={40} />
-        </CircularProgressContainer>
-      ) : matchDataExists ? (
+      <HeaderSearch region={region} name={name} />
+      {userExists === null ? (
+        <LoadingCircular />
+      ) : userExists ? (
         <div>
           <UserInfoHeader
             region={region}
             name={userData["name"]}
             level={userData["summonerLevel"]}
+            tier={userData["tier"]}
+            rank={userData["rank"]}
+            lp={userData["leaguePoints"]}
             profileIconId={userData["profileIconId"]}
+            winRate={userData["winRate"]}
+            totalGamesPlayed={userData["totalGamesPlayed"]}
           />
-          <Ads />
-          <InfoInsight data={matchData} />
+          <UserSummary region={region} name={name} />
         </div>
-      ) : userExists ? (
-        "no match data"
-      ) : (
-        <UserNotFound />
-      )}
+      ) : <UserNotFound />}
       {/* <Footer /> */}
     </Container>
   );
@@ -120,19 +91,5 @@ const Container = styled.div`
   position: relative;
   overflow-x: hidden;
 `;
-
-const CircularProgressContainer = styled.div`
-  position: absolute;
-  height: 100%;
-  top: 50%;
-  left: 50%;
-`;
-
-// const CustomCircularProgress = withStyles({
-//   root: {
-//     width: "100px",
-//     height: "100px"
-//   },
-// })(CircularProgress);
 
 export default Insights;
