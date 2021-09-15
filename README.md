@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+[![Netlify Status](https://api.netlify.com/api/v1/badges/52629542-1bda-4ba1-af16-c5098e287210/deploy-status)](https://app.netlify.com/sites/daiv/deploys)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Daiv.app
 
 ## Available Scripts
 
