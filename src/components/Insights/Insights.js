@@ -19,6 +19,7 @@ const Insights = () => {
 
   const [userExists, setUserExists] = useState(null);
   const [userData, setUserData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getUserInfo();
@@ -32,17 +33,27 @@ const Insights = () => {
         `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
       )
       .then((res) => {
+        console.log(res);
         if (res.data.status) {
           setUserExists(true);
           setUserData(res.data.info);
+          setIsLoading(false);
         } else {
           setUserExists(false);
+          setIsLoading(false);
           return;
         }
       });
+
     return;
   };
 
+  if (isLoading) {
+    <Container>
+      <BackgroundOverlay color="#f5f9fc" />
+      <LoadingCircular />
+    </Container>
+  }
 
   return (
     <Container>
@@ -50,21 +61,22 @@ const Insights = () => {
       <HeaderSearch region={region} name={name} />
       {userExists === null ? (
         <LoadingCircular />
-      ) : true ? (
+      ) : userExists ? (
         <div>
           <UserInfoHeader
             region={region}
             name={userData["name"]}
             level={userData["summonerLevel"]}
+            tier={userData["tier"]}
+            rank={userData["rank"]}
+            lp={userData["leaguePoints"]}
             profileIconId={userData["profileIconId"]}
+            winRate={userData["winRate"]}
+            totalGamesPlayed={userData["totalGamesPlayed"]}
           />
           <UserSummary region={region} name={name} />
         </div>
-      ) : userExists ? (
-        "no match data"
-      ) : (
-        <UserNotFound />
-      )}
+      ) : <UserNotFound />}
       {/* <Footer /> */}
     </Container>
   );
