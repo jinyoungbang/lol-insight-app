@@ -14,6 +14,7 @@ function App() {
           <Route exact path="/insights/:region/" component={UserNotFoundPage} />
           <Route exact path="/insights/:region/:name" component={Insights} />
           <Route component={Home} />
+          <Route path="/riot.txt" />
         </Switch>
       </div>
     </Router>
