@@ -69,9 +69,6 @@ const SearchBar = () => {
             <IconButton
               type="submit"
               className={classes.iconButton}
-              // onClick={() =>
-              //   (window.location.href = "/insights/" + region + "/" + name)
-              // }
             >
               <SearchIcon />
             </IconButton>

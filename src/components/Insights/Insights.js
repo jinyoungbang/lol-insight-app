@@ -10,7 +10,7 @@ import BackgroundOverlay from "../BackgroundOverlay";
 import UserSummary from "./components/UserSummary";
 
 import LoadingCircular from "./components/LoadingCircular";
-import { validateAndConvertRegion } from "./helpers/functions";
+import { validateAndConvertRegion, findRegionLambdaEndpoint } from "./helpers/functions";
 
 const Insights = () => {
   const userEndpoint = "find-user-info";
@@ -28,7 +28,41 @@ const Insights = () => {
 
   const getUserInfo = () => {
     const regionEndpoint = validateAndConvertRegion(region);
-    axios
+    const lambdaEndpoint = findRegionLambdaEndpoint(regionEndpoint);
+    if (lambdaEndpoint === "americas") {
+      axios
+      .get(
+        `${process.env.REACT_APP_SERVER_US}${userEndpoint}/${regionEndpoint}/${name}`
+      )
+      .then((res) => {
+        if (res.data.status) {
+          setUserExists(true);
+          setUserData(res.data.info);
+          setIsLoading(false);
+        } else {
+          setUserExists(false);
+          setIsLoading(false);
+          return;
+        }
+      });
+    } else if (lambdaEndpoint === "europe") {
+      axios
+      .get(
+        `${process.env.REACT_APP_SERVER_EU}${userEndpoint}/${regionEndpoint}/${name}`
+      )
+      .then((res) => {
+        if (res.data.status) {
+          setUserExists(true);
+          setUserData(res.data.info);
+          setIsLoading(false);
+        } else {
+          setUserExists(false);
+          setIsLoading(false);
+          return;
+        }
+      });
+    } else {
+      axios
       .get(
         `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
       )
@@ -43,6 +77,7 @@ const Insights = () => {
           return;
         }
       });
+    }
 
     return;
   };
