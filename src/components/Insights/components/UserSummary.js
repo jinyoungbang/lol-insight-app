@@ -7,7 +7,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Typography from "@material-ui/core/Typography";
 import UserInsightsCheckbox from "./UserInsightsCheckbox";
 
-import { findNameToRender, validateAndConvertRegion } from "../helpers/functions";
+import {
+  findNameToRender,
+  validateAndConvertRegion,
+} from "../helpers/functions";
 
 import LoadingCircular from "./LoadingCircular";
 import Ads from "./Ads";
@@ -86,9 +89,9 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       minWidth: "500px",
     },
-    adsReplacement: {
-      margin: "30px 0",
-    },
+    // adsReplacement: {
+    //   margin: "30px 0",
+    // },
   })
 );
 
@@ -106,14 +109,14 @@ const changeDataFormat = (data) => {
         statsName: stat,
         data: dataToAppend,
         toRender: true,
-        statsNameForRender: findNameToRender(stat)
+        statsNameForRender: findNameToRender(stat),
       });
     } else {
       modifiedData.push({
         statsName: stat,
         data: dataToAppend,
         toRender: false,
-        statsNameForRender: findNameToRender(stat)
+        statsNameForRender: findNameToRender(stat),
       });
     }
   });
@@ -125,9 +128,11 @@ const UserSummary = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   // const [matchDataExists, setMatchDataExists] = useState(null);
   const [matchData, setMatchData] = useState([]);
+  const [adBlockEnabled, setAdBlockEnabled] = useState(false);
 
   useEffect(() => {
     getMatchInfo();
+    detectAdBlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -154,6 +159,7 @@ const UserSummary = (props) => {
     setMatchData(items);
   };
 
+  // Retrieves match info through API call
   const getMatchInfo = () => {
     const regionEndpoint = validateAndConvertRegion(props.region);
     axios
@@ -174,14 +180,26 @@ const UserSummary = (props) => {
       });
   };
 
+  const detectAdBlock = async () => {
+    const googleAdUrl =
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    try {
+      await fetch(new Request(googleAdUrl)).catch(
+        (_) => (setAdBlockEnabled(true))
+      );
+    } catch (e) {
+      setAdBlockEnabled(true);
+    } finally {
+      console.log(`AdBlock Enabled: ${adBlockEnabled}`);
+    }
+  };
+
   if (isLoading) {
     return <LoadingCircular />;
   } else {
     return (
       <div>
-
-        <Ads />
-        <div className={classes.adsReplacement}></div>
+        {adBlockEnabled ? (<div />): ((<Ads />))}
 
         <div className={classes.root}>
           <div className={classes.userPersonalInfo}>
@@ -227,6 +245,5 @@ const GraphContainer = styled.div`
   flex-grow: 1;
   marginright: 50px;
 `;
-
 
 export default UserSummary;

@@ -15,9 +15,10 @@ const Ads = () => {
     ins.setAttribute('data-ad-width', '320');
     ins.setAttribute('data-ad-height', '100');
     ins.setAttribute('data-ad-unit', 'DAN-oUMcZ3QRZ4GcpZLx');
+
   
     document.querySelector('.adfit').appendChild(ins);
-    document.querySelector('.adfit').appendChild(scr);
+    console.log(document.querySelector('.adfit').appendChild(scr));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
  
@@ -48,6 +49,7 @@ const ContentContainer = styled.div`
   vertical-align: middle;
   text-align: center;
   padding: 30px 0;
+  ${'' /* margin-bottom: -50px; */}
 `;
 
 const MockAd = styled.div`

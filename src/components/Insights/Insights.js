@@ -33,7 +33,6 @@ const Insights = () => {
         `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
       )
       .then((res) => {
-        console.log(res);
         if (res.data.status) {
           setUserExists(true);
           setUserData(res.data.info);
