@@ -10,7 +10,10 @@ import BackgroundOverlay from "../BackgroundOverlay";
 import UserSummary from "./components/UserSummary";
 
 import LoadingCircular from "./components/LoadingCircular";
-import { validateAndConvertRegion, findRegionLambdaEndpoint } from "./helpers/functions";
+import {
+  validateAndConvertRegion,
+  findRegionLambdaEndpoint,
+} from "./helpers/functions";
 
 const Insights = () => {
   const userEndpoint = "find-user-info";
@@ -29,11 +32,13 @@ const Insights = () => {
   const getUserInfo = () => {
     const regionEndpoint = validateAndConvertRegion(region);
     const lambdaEndpoint = findRegionLambdaEndpoint(regionEndpoint);
-    if (lambdaEndpoint === "americas") {
-      axios
-      .get(
-        `${process.env.REACT_APP_SERVER_US}${userEndpoint}/${regionEndpoint}/${name}`
-      )
+    let urlEndpoint = process.env.REACT_APP_SERVER;
+    if (lambdaEndpoint === "americas")
+      urlEndpoint = process.env.REACT_APP_SERVER_US;
+    else if (lambdaEndpoint === "europe")
+      urlEndpoint = process.env.REACT_APP_SERVER_EU;
+    axios
+      .get(`${urlEndpoint}${userEndpoint}/${regionEndpoint}/${name}`)
       .then((res) => {
         if (res.data.status) {
           setUserExists(true);
@@ -45,39 +50,6 @@ const Insights = () => {
           return;
         }
       });
-    } else if (lambdaEndpoint === "europe") {
-      axios
-      .get(
-        `${process.env.REACT_APP_SERVER_EU}${userEndpoint}/${regionEndpoint}/${name}`
-      )
-      .then((res) => {
-        if (res.data.status) {
-          setUserExists(true);
-          setUserData(res.data.info);
-          setIsLoading(false);
-        } else {
-          setUserExists(false);
-          setIsLoading(false);
-          return;
-        }
-      });
-    } else {
-      axios
-      .get(
-        `${process.env.REACT_APP_SERVER}${userEndpoint}/${regionEndpoint}/${name}`
-      )
-      .then((res) => {
-        if (res.data.status) {
-          setUserExists(true);
-          setUserData(res.data.info);
-          setIsLoading(false);
-        } else {
-          setUserExists(false);
-          setIsLoading(false);
-          return;
-        }
-      });
-    }
 
     return;
   };
@@ -86,7 +58,7 @@ const Insights = () => {
     <Container>
       <BackgroundOverlay color="#f5f9fc" />
       <LoadingCircular />
-    </Container>
+    </Container>;
   }
 
   return (
@@ -110,7 +82,9 @@ const Insights = () => {
           />
           <UserSummary region={region} name={name} />
         </div>
-      ) : <UserNotFound />}
+      ) : (
+        <UserNotFound />
+      )}
       {/* <Footer /> */}
     </Container>
   );

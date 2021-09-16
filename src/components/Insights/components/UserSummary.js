@@ -10,6 +10,7 @@ import UserInsightsCheckbox from "./UserInsightsCheckbox";
 import {
   findNameToRender,
   validateAndConvertRegion,
+  findRegionLambdaEndpoint,
 } from "../helpers/functions";
 
 import LoadingCircular from "./LoadingCircular";
@@ -162,10 +163,14 @@ const UserSummary = (props) => {
   // Retrieves match info through API call
   const getMatchInfo = () => {
     const regionEndpoint = validateAndConvertRegion(props.region);
+    const lambdaEndpoint = findRegionLambdaEndpoint(regionEndpoint);
+    let urlEndpoint = process.env.REACT_APP_SERVER;
+    if (lambdaEndpoint === "americas")
+      urlEndpoint = process.env.REACT_APP_SERVER_US;
+    else if (lambdaEndpoint === "europe")
+      urlEndpoint = process.env.REACT_APP_SERVER_EU;
     axios
-      .get(
-        `${process.env.REACT_APP_SERVER}${matchEndpoint}/${regionEndpoint}/${props.name}`
-      )
+      .get(`${urlEndpoint}${matchEndpoint}/${regionEndpoint}/${props.name}`)
       .then((res) => {
         if (res.data.length > 0) {
           // setMatchDataExists(true);
@@ -184,8 +189,8 @@ const UserSummary = (props) => {
     const googleAdUrl =
       "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
     try {
-      await fetch(new Request(googleAdUrl)).catch(
-        (_) => (setAdBlockEnabled(true))
+      await fetch(new Request(googleAdUrl)).catch((_) =>
+        setAdBlockEnabled(true)
       );
     } catch (e) {
       setAdBlockEnabled(true);
@@ -199,7 +204,7 @@ const UserSummary = (props) => {
   } else {
     return (
       <div>
-        {adBlockEnabled ? (<div />): ((<Ads />))}
+        {adBlockEnabled ? <div /> : <Ads />}
 
         <div className={classes.root}>
           <div className={classes.userPersonalInfo}>
