@@ -5,7 +5,7 @@ import axios from "axios";
 
 import HeaderSearch from "./components/HeaderSearch";
 import UserInfoHeader from "./components/UserInfoHeader";
-import UserNotFound from "./components/UserNotFound";
+import UserNotFound from "./components/Errors/UserNotFound";
 import BackgroundOverlay from "../BackgroundOverlay";
 import UserSummary from "./components/UserSummary";
 

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import HeaderSearch from "../Insights/components/HeaderSearch";
-import UserNotFound from "../Insights/components/UserNotFound";
+import UserNotFound from "../Insights/components/Errors/UserNotFound";
 import BackgroundOverlay from "../BackgroundOverlay";
 
 const UserNotFoundPage = () => {

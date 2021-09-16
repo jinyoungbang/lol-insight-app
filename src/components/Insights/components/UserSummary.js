@@ -16,6 +16,7 @@ import {
 import LoadingCircular from "./LoadingCircular";
 import Ads from "./Ads";
 import InsightGraph from "./InsightGraph";
+import MatchNotFound from "./Errors/MatchNotFound";
 
 const AntTabs = withStyles({
   root: {
@@ -127,7 +128,7 @@ const changeDataFormat = (data) => {
 const UserSummary = (props) => {
   const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  // const [matchDataExists, setMatchDataExists] = useState(null);
+  const [matchDataExists, setMatchDataExists] = useState(false);
   const [matchData, setMatchData] = useState([]);
   const [adBlockEnabled, setAdBlockEnabled] = useState(false);
 
@@ -165,18 +166,20 @@ const UserSummary = (props) => {
     const regionEndpoint = validateAndConvertRegion(props.region);
     const lambdaEndpoint = findRegionLambdaEndpoint(regionEndpoint);
     let urlEndpoint = process.env.REACT_APP_SERVER;
+
     if (lambdaEndpoint === "americas")
       urlEndpoint = process.env.REACT_APP_SERVER_US;
     else if (lambdaEndpoint === "europe")
       urlEndpoint = process.env.REACT_APP_SERVER_EU;
+
     axios
       .get(`${urlEndpoint}${matchEndpoint}/${regionEndpoint}/${props.name}`)
       .then((res) => {
         if (res.data.length > 0) {
-          // setMatchDataExists(true);
+          setMatchDataExists(true);
           setMatchData(changeDataFormat(res.data));
         } else {
-          // setMatchDataExists(false);
+          setMatchDataExists(false);
         }
       })
       .then(() => {
@@ -194,9 +197,7 @@ const UserSummary = (props) => {
       );
     } catch (e) {
       setAdBlockEnabled(true);
-    } finally {
-      console.log(`AdBlock Enabled: ${adBlockEnabled}`);
-    }
+    } 
   };
 
   if (isLoading) {
@@ -205,8 +206,7 @@ const UserSummary = (props) => {
     return (
       <div>
         {adBlockEnabled ? <div /> : <Ads />}
-
-        <div className={classes.root}>
+        {matchDataExists ? (<div className={classes.root}>
           <div className={classes.userPersonalInfo}>
             <UserInsightsCheckbox
               data={matchData}
@@ -235,7 +235,7 @@ const UserSummary = (props) => {
               </GraphContainer>
             </InfoInsightContainer>
           </div>
-        </div>
+        </div>) : (<MatchNotFound />)}
       </div>
     );
   }
