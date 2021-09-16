@@ -10,7 +10,7 @@ import UserInsightsCheckbox from "./UserInsightsCheckbox";
 import { findNameToRender, validateAndConvertRegion } from "../helpers/functions";
 
 import LoadingCircular from "./LoadingCircular";
-// import Ads from "./Ads";
+import Ads from "./Ads";
 import InsightGraph from "./InsightGraph";
 
 const AntTabs = withStyles({
@@ -180,7 +180,7 @@ const UserSummary = (props) => {
     return (
       <div>
 
-        {/* <Ads /> */}
+        <Ads />
         <div className={classes.adsReplacement}></div>
 
         <div className={classes.root}>
