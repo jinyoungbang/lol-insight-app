@@ -57,6 +57,8 @@ const useStyles = makeStyles((theme) =>
     textField: {
       marginTop: "20px",
       marginBottom: "50px",
+      marginLeft: "40px",
+      marginRight: "40px"
     },
     searchBar: {
       marginBottom: "150px",
