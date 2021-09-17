@@ -1,5 +1,4 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 import {
   makeStyles,
   createStyles,
@@ -7,10 +6,9 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
-import HomeMobile from "./HomeMobile";
 import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
-import SearchBar from "./components/SearchBar";
+import ResponsiveSearchBar from "./components/ResponsiveSearchBar";
 import Footer from "./components/Footer";
 
 const theme = createTheme({
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) =>
       height: "100%",
       margin: "0 auto",
       minHeight: "100%",
-      minWidth: "970px",
+      minWidth: "100%",
       position: "relative",
       overflowX: "hidden",
     },
@@ -54,9 +52,10 @@ const useStyles = makeStyles((theme) =>
       marginBottom: "-20px",
     },
     logoImage: {
-      height: "250px",
+      height: "170px",
     },
     textField: {
+      marginTop: "20px",
       marginBottom: "50px",
     },
     searchBar: {
@@ -66,42 +65,35 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "center",
       margin: "0 auto",
       flexDirection: "row",
+      marginTop: "20px",
+      width: "100%"
     },
   })
 );
 
-const Home = () => {
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  // const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
-  // const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+const HomeMobile = () => {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <BackgroundOverlay color="#635bff" />
-      {isTabletOrMobile && <HomeMobile />}
-      {isDesktopOrLaptop && (
-        <div className={classes.root}>
-          <div className={classes.logo}>
-            <img
-              className={classes.logoImage}
-              src={"/logo-beta.png"}
-              alt="Daiv Logo"
-            />
-          </div>
-          <div className={classes.textField}>
-            <SubText>
-              Insights Visualization Platform – Daiv into your statistics!
-            </SubText>
-          </div>
-          <div className={classes.searchBar}>
-            <SearchBar />
-          </div>
-          <Footer />
+      <div className={classes.root}>
+        <div className={classes.logo}>
+          <img
+            className={classes.logoImage}
+            src={"/logo-beta.png"}
+            alt="Daiv Logo"
+          />
         </div>
-      )}
+        <div className={classes.textField}>
+          <SubText>
+            Insights Visualization Platform – Daiv into your statistics!
+          </SubText>
+        </div>
+        <div className={classes.searchBar}>
+          <ResponsiveSearchBar />
+        </div>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 };
@@ -109,8 +101,8 @@ const Home = () => {
 const SubText = styled.div`
   font-family: "Inter", sans-serif;
   color: #fcf7ff;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 300;
 `;
 
-export default Home;
+export default HomeMobile;
