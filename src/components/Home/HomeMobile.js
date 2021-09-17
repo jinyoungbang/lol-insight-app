@@ -9,7 +9,7 @@ import {
 import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import ResponsiveSearchBar from "./components/ResponsiveSearchBar";
-import Footer from "./components/Footer";
+import MobileFooter from "./components/MobileFooter";
 
 const theme = createTheme({
   palette: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) =>
       height: "100%",
     },
     logo: {
-      marginTop: "100px",
+      marginTop: "70px",
       marginBottom: "-20px",
     },
     logoImage: {
@@ -59,13 +59,13 @@ const useStyles = makeStyles((theme) =>
       marginBottom: "50px",
     },
     searchBar: {
-      marginBottom: "200px",
+      marginBottom: "150px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       margin: "0 auto",
       flexDirection: "row",
-      marginTop: "20px",
+      marginTop: "80px",
       width: "100%"
     },
   })
@@ -92,7 +92,7 @@ const HomeMobile = () => {
         <div className={classes.searchBar}>
           <ResponsiveSearchBar />
         </div>
-        <Footer />
+        <MobileFooter />
       </div>
     </ThemeProvider>
   );
