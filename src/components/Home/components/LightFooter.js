@@ -5,7 +5,11 @@ import { Typography, Link } from "@material-ui/core";
 const useStyles = makeStyles((theme) =>
   createStyles({
     main: {
-      color: "#fcf7ff",
+      color: "#1D1A27",
+      position: "relative",
+      bottom: 0,
+      marginBottom: "20px"
+    //   height: "calc(100% - 20px)"
     },
     footer: {
       display: "flex",
@@ -14,7 +18,7 @@ const useStyles = makeStyles((theme) =>
       // justifyContent: 'space-between'
     },
     footerText: {
-      fontFamily: '"Inter",sans-serif',
+      fontFamily: '"Inter", sans-serif',
       color: "#fcf7ff",
     },
     desc: {
@@ -32,7 +36,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function Footer() {
+function LightFooter() {
   const classes = useStyles();
 
   return (
@@ -75,4 +79,4 @@ const FooterLink = withStyles({
   },
 })(Link);
 
-export default Footer;
+export default LightFooter;
