@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) =>
       color: "#1D1A27",
       position: "relative",
       bottom: 0,
-      marginBottom: "20px"
-    //   height: "calc(100% - 20px)"
+      marginBottom: "20px",
+      //   height: "calc(100% - 20px)"
     },
     footer: {
       display: "flex",
@@ -31,7 +31,11 @@ const useStyles = makeStyles((theme) =>
       fontSize: "11px",
       fontWeight: "400",
       marginTop: "10px",
-      marginBottom: "30px"
+      marginBottom: "30px",
+    },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
     },
   })
 );
@@ -43,21 +47,21 @@ function LightFooter() {
     <div className={classes.main}>
       <div className={classes.footer}>
         <div classesName={classes.footerText}>
-          <FooterLink
-            classesName={classes.footerTextLink}
-            onClick={() => (window.location.href = "/about")}
-            color="inherit"
-          >
-            About Daiv
-          </FooterLink>
+          <a href="/about" className={classes.link}>
+            <FooterLink color="inherit">
+              About Daiv
+            </FooterLink>
+          </a>
         </div>
         <div classesName={classes.footerText}>
-          <FooterLink
-            onClick={() => (window.location.href = "/privacy")}
-            color="inherit"
-          >
-            Privacy Policy
-          </FooterLink>
+          <a href="/privacy" className={classes.link}>
+            <FooterLink color="inherit">Privacy Policy</FooterLink>
+          </a>
+        </div>
+        <div classesName={classes.footerText}>
+          <a href="mailto:jybang1999@gmail.com" className={classes.link}>
+            <FooterLink color="inherit">Feedback</FooterLink>
+          </a>
         </div>
       </div>
       <Typography className={classes.notice} variant="subtitle1">
@@ -73,7 +77,7 @@ function LightFooter() {
 
 const FooterLink = withStyles({
   root: {
-    marginRight: "18px",
+    marginRight: "20px",
     fontSize: "15px",
     fontWeight: "400",
   },
