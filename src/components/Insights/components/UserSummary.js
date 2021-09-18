@@ -223,7 +223,7 @@ const UserSummary = (props) => {
                     aria-label="Role Tab"
                   >
                     <AntTab label="Overall" />
-                    <AntTab label="Coming Soon..." disabled={true} />
+                    {/* <AntTab label="Coming Soon..." disabled={true} /> */}
                   </AntTabs>
                   <Typography className={classes.padding} />
                 </div>
