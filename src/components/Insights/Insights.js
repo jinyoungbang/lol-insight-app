@@ -8,6 +8,7 @@ import UserInfoHeader from "./components/UserInfoHeader";
 import UserNotFound from "./components/Errors/UserNotFound";
 import BackgroundOverlay from "../BackgroundOverlay";
 import UserSummary from "./components/UserSummary";
+import LightFooter from "../Home/components/LightFooter";
 
 import LoadingCircular from "./components/LoadingCircular";
 import {
@@ -85,7 +86,9 @@ const Insights = () => {
       ) : (
         <UserNotFound />
       )}
-      {/* <Footer /> */}
+      <FooterContainer>
+        <LightFooter />
+      </FooterContainer>
     </Container>
   );
 };
@@ -96,8 +99,17 @@ const Container = styled.div`
   height: 100%;
   margin: 0 auto;
   min-width: 970px;
+  min-height: 700px;
   position: relative;
   overflow-x: hidden;
+  padding-bottom: 86px;
+`;
+
+const FooterContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 `;
 
 export default Insights;

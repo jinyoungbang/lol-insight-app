@@ -15,6 +15,7 @@ const CircularProgressContainer = styled.div`
   height: 100%;
   top: 50%;
   left: 50%;
+  ${'' /* margin-top:100%; */}
 `;
 
 export default LoadingCircular;
