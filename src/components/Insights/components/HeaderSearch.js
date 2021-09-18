@@ -51,12 +51,14 @@ const HeaderSearch = (props) => {
     <HeaderContainer>
       <ContentContainer>
         <LogoContainer>
-          <img
-            className={classes.logoImage}
-            src={"/searchbar-logo.png"}
-            onClick={() => (window.location.href = "/")}
-            alt="Daiv Logo"
-          />
+          <a href="/">
+            <img
+              className={classes.logoImage}
+              src={"/searchbar-logo.png"}
+              // onClick={() => (window.location.href = "/")}
+              alt="Daiv Logo"
+            />
+          </a>
         </LogoContainer>
         <SearchContainer>
           <form
@@ -93,10 +95,7 @@ const HeaderSearch = (props) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-              >
+              <IconButton type="submit" className={classes.iconButton}>
                 <SearchIcon />
               </IconButton>
             </Paper>

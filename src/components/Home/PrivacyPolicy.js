@@ -60,12 +60,12 @@ export default function PrivacyPolicy() {
         <HeaderSearch region="KR" />
         <div className={classes.policyContainer}>
           <div className={classes.padding}>
-            <h1>Privacy Policy for Daiv.app</h1>
+            <h1>Privacy Policy</h1>
 
             <p>
               At Daiv, accessible from daiv.app, one of our main priorities is
               the privacy of our visitors. This Privacy Policy document contains
-              types of information that is collected and recorded by DAIV and
+              types of information that is collected and recorded by Daiv and
               how we use it.
             </p>
 
@@ -79,12 +79,7 @@ export default function PrivacyPolicy() {
               valid for visitors to our website with regards to the information
               that they shared and/or collect in DAIV. This policy is not
               applicable to any information collected offline or via channels
-              other than this website. Our Privacy Policy was created with the
-              help of the{" "}
-              <a href="https://www.privacypolicygenerator.info">
-                Free Privacy Policy Generator
-              </a>
-              .
+              other than this website.
             </p>
 
             <h2>Consent</h2>
@@ -287,7 +282,7 @@ export default function PrivacyPolicy() {
               records.
             </p>
             <br></br>
-            <p>Last Updated: September 2021</p>
+            <p>Effective Date: September 18, 2021</p>
           </div>
           <div className={classes.footer}>
             <LightFooter />
