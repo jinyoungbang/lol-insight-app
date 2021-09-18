@@ -5,7 +5,7 @@ const MatchNotFound = () => {
   return (
     <Container>
       <Title>
-        We couldn't find any recent matches played.
+        We couldn't find any recent matches played or there are currently issues with Riot's API.
       </Title>
       <Subtitle>
         Please check again later.
