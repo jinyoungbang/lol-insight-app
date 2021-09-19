@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   makeStyles,
@@ -50,14 +50,14 @@ const useStyles = makeStyles((theme) =>
       height: "100%",
     },
     logo: {
-      marginTop: "100px",
+      marginTop: "60px",
       marginBottom: "-20px",
     },
     logoImage: {
       height: "250px",
     },
     textField: {
-      marginBottom: "50px",
+      marginBottom: "20px",
     },
     searchBar: {
       marginBottom: "200px",
@@ -67,10 +67,30 @@ const useStyles = makeStyles((theme) =>
       margin: "0 auto",
       flexDirection: "row",
     },
+    adsContainer: {
+      margin: "0 auto",
+      width: "700px",
+      marginBottom: "30px"
+    },
   })
 );
 
 const Home = () => {
+  useEffect(() => {
+    let ins = document.createElement("ins");
+    let scr = document.createElement("script");
+    ins.className = "kakao_ad_area";
+    ins.style = "display:none;";
+    scr.async = "true";
+    scr.type = "text/javascript";
+    scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    ins.setAttribute("data-ad-width", "320");
+    ins.setAttribute("data-ad-height", "100");
+    ins.setAttribute("data-ad-unit", "DAN-e1CXVSqYwUYewgTw");
+    document.querySelector(".adfit").appendChild(ins);
+    document.querySelector(".adfit").appendChild(scr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -95,6 +115,9 @@ const Home = () => {
             <SubText>
               Insights Visualization Platform – Daiv into your statistics!
             </SubText>
+          </div>
+          <div className={classes.adsContainer}>
+            <div className="adfit" />
           </div>
           <div className={classes.searchBar}>
             <SearchBar />

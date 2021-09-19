@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) =>
       marginTop: "20px",
       marginBottom: "50px",
       marginLeft: "40px",
-      marginRight: "40px"
+      marginRight: "40px",
     },
     searchBar: {
       marginBottom: "150px",
@@ -68,7 +68,11 @@ const useStyles = makeStyles((theme) =>
       margin: "0 auto",
       flexDirection: "row",
       marginTop: "80px",
-      width: "100%"
+      width: "100%",
+    },
+    adsContainer: {
+      margin: "0 auto",
+      width: "90%"
     },
   })
 );
@@ -90,6 +94,9 @@ const HomeMobile = () => {
           <SubText>
             Insights Visualization Platform – Daiv into your statistics!
           </SubText>
+        </div>
+        <div className={classes.adsContainer}>
+          <div className="adfit" />
         </div>
         <div className={classes.searchBar}>
           <ResponsiveSearchBar />
