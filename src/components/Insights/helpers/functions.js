@@ -39,7 +39,13 @@ function findNameToRender(stat) {
         "visionScore": "Vision Score",
         "visionWardsBought": "Vision Wards Bought",
         "wardsKilled": "Total Wards Killed",
-        "wardsPlaced": "Total Wards Placed"
+        "wardsPlaced": "Total Wards Placed",
+        "gd@15": "Gold Difference @ 15",
+        "xpd@15": "XP Difference @ 15",
+        "csd@15": "CS Difference @ 15",
+        "goldPerMin": "Gold per min",
+        "killParticipation": "Kill Participation",
+        "dmgPercentage": "DMG Percentage"
     };
 
     if (!(stat in statsNameToRender)) {

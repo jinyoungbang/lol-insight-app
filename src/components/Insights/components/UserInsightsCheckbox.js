@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const UserInsightsCheckbox = (props) => {
+  console.log(props.data);
   const classes = useStyles();
 
   return (
@@ -33,7 +34,20 @@ const UserInsightsCheckbox = (props) => {
         </FormLabel>
         <br></br>
         <FormGroup>
-          <DaivFormControlLabel
+          {props.data.map((data) => (
+            <DaivFormControlLabel
+              control={
+                <Checkbox
+                  checked={data.toRender}
+                  onChange={props.handleChange}
+                  name={data.statsName}
+                  style={{ color: "#635BFF" }}
+                />
+              }
+              label={data.statsNameForRender}
+            />
+          ))}
+          {/* <DaivFormControlLabel
             control={
               <Checkbox
                 checked={props.data[0].toRender}
@@ -109,7 +123,7 @@ const UserInsightsCheckbox = (props) => {
               />
             }
             label="Total Wards Placed"
-          />
+          /> */}
         </FormGroup>
       </FormControl>
     </div>
