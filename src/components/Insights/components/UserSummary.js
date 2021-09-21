@@ -122,6 +122,14 @@ const changeDataFormat = (data) => {
       });
     }
   });
+
+  const byStatsNameForRender = (a, b) => {
+    return a.statsNameForRender < b.statsNameForRender ? -1 : a.model > b.model ? 1 : 0;
+  };
+
+  // Sort checkboxes alphabetically
+  modifiedData = modifiedData.sort(byStatsNameForRender);
+
   return modifiedData;
 };
 
@@ -197,7 +205,7 @@ const UserSummary = (props) => {
       );
     } catch (e) {
       setAdBlockEnabled(true);
-    } 
+    }
   };
 
   if (isLoading) {
@@ -206,36 +214,40 @@ const UserSummary = (props) => {
     return (
       <div>
         {adBlockEnabled ? <div /> : <Ads />}
-        {matchDataExists ? (<div className={classes.root}>
-          <div className={classes.userPersonalInfo}>
-            <UserInsightsCheckbox
-              data={matchData}
-              handleChange={handleRenderChange}
-            />
+        {matchDataExists ? (
+          <div className={classes.root}>
+            <div className={classes.userPersonalInfo}>
+              <UserInsightsCheckbox
+                data={matchData}
+                handleChange={handleRenderChange}
+              />
+            </div>
+            <div className={classes.userMatchInfo}>
+              <InfoInsightContainer>
+                <GraphContainer>
+                  <div className={classes.demo1}>
+                    <AntTabs
+                      value={value}
+                      onChange={handleChange}
+                      aria-label="Role Tab"
+                    >
+                      <AntTab label="Overall" />
+                      {/* <AntTab label="Coming Soon..." disabled={true} /> */}
+                    </AntTabs>
+                    <Typography className={classes.padding} />
+                  </div>
+                  {matchData
+                    .filter((d) => d.toRender)
+                    .map((data, i) => (
+                      <InsightGraph key={i} data={data} />
+                    ))}
+                </GraphContainer>
+              </InfoInsightContainer>
+            </div>
           </div>
-          <div className={classes.userMatchInfo}>
-            <InfoInsightContainer>
-              <GraphContainer>
-                <div className={classes.demo1}>
-                  <AntTabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Role Tab"
-                  >
-                    <AntTab label="Overall" />
-                    {/* <AntTab label="Coming Soon..." disabled={true} /> */}
-                  </AntTabs>
-                  <Typography className={classes.padding} />
-                </div>
-                {matchData
-                  .filter((d) => d.toRender)
-                  .map((data, i) => (
-                    <InsightGraph key={i} data={data} />
-                  ))}
-              </GraphContainer>
-            </InfoInsightContainer>
-          </div>
-        </div>) : (<MatchNotFound />)}
+        ) : (
+          <MatchNotFound />
+        )}
       </div>
     );
   }

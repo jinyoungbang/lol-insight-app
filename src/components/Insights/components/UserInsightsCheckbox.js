@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) =>
 );
 
 const UserInsightsCheckbox = (props) => {
-  console.log(props.data);
   const classes = useStyles();
 
   return (
