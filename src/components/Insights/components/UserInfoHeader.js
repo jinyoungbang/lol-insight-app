@@ -82,7 +82,7 @@ const ProfileInfoTitle = styled.div`
   align-items: center;
   justify-content: left;
   overflow: hidden;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 34px;
   font-weight: 700;
 `;
@@ -91,7 +91,7 @@ const ProfileInfoTierText = styled.div`
   color: #635bff;
   display: flex;
   align-items: center;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
 `;
@@ -100,7 +100,7 @@ const ProfileInfoSubtitle = styled.div`
   color: #1d1a27;
   display: flex;
   align-items: center;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 400;
   margin-top: 5px;

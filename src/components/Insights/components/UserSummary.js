@@ -124,7 +124,11 @@ const changeDataFormat = (data) => {
   });
 
   const byStatsNameForRender = (a, b) => {
-    return a.statsNameForRender < b.statsNameForRender ? -1 : a.model > b.model ? 1 : 0;
+    return a.statsNameForRender < b.statsNameForRender
+      ? -1
+      : a.model > b.model
+      ? 1
+      : 0;
   };
 
   // Sort checkboxes alphabetically
@@ -137,8 +141,15 @@ const UserSummary = (props) => {
   const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [matchDataExists, setMatchDataExists] = useState(false);
-  const [matchData, setMatchData] = useState([]);
   const [adBlockEnabled, setAdBlockEnabled] = useState(false);
+
+  const [matchData, setMatchData] = useState([]);
+  const [matchWin, setMatchWin] = useState([]);
+  const [matchUserRole, setMatchUserRole] = useState([]);
+  const [championNames, setChampionNames] = useState([]);
+  const [kills, setKills] = useState([]);
+  const [deaths, setDeaths] = useState([]);
+  const [assists, setAssists] = useState([]);
 
   useEffect(() => {
     getMatchInfo();
@@ -185,7 +196,13 @@ const UserSummary = (props) => {
       .then((res) => {
         if (res.data.length > 0) {
           setMatchDataExists(true);
-          setMatchData(changeDataFormat(res.data));
+          setMatchData(changeDataFormat(res.data.map((x) => x.insight)));
+          setMatchWin(res.data.map((x) => x.win));
+          setMatchUserRole(res.data.map((x) => x.userRole));
+          setChampionNames(res.data.map((x) => x.championName));
+          setKills(res.data.map((x) => x.kills));
+          setDeaths(res.data.map((x) => x.deaths));
+          setAssists(res.data.map((x) => x.assists));
         } else {
           setMatchDataExists(false);
         }
@@ -239,7 +256,16 @@ const UserSummary = (props) => {
                   {matchData
                     .filter((d) => d.toRender)
                     .map((data, i) => (
-                      <InsightGraph key={i} data={data} />
+                      <InsightGraph
+                        key={i}
+                        data={data}
+                        win={matchWin}
+                        userRole={matchUserRole}
+                        championNames={championNames}
+                        kills={kills}
+                        deaths={deaths}
+                        assists={assists}
+                      />
                     ))}
                 </GraphContainer>
               </InfoInsightContainer>
