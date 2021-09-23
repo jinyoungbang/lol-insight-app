@@ -62,6 +62,12 @@ const CustomTooltip = ({ active, payload, label }) => {
     const kills = payload[0].payload.kills;
     const deaths = payload[0].payload.deaths;
     const assists = payload[0].payload.assists;
+
+    let isPercentage = false;
+    const percentageValues = ["dmgPercentage", "killParticipation"];
+
+    if (percentageValues.includes(payload[0].name)) isPercentage = true;
+
     if (payload[0].payload.win) {
       return (
         <WinTooltipContainer>
@@ -78,13 +84,19 @@ const CustomTooltip = ({ active, payload, label }) => {
             </ChampionImage>
             <MatchInfo>
               <WinText>Victory</WinText>
-              <ChampionNameText>{championName} / {userRole} </ChampionNameText>
+              <ChampionNameText>
+                {championName} / {userRole}{" "}
+              </ChampionNameText>
               <KDAText>
                 {kills} / {deaths} / {assists}
               </KDAText>
             </MatchInfo>
           </MatchDataContainer>
-          <TooltipDataText>{`${payload[0].name} : ${payload[0].value}`}</TooltipDataText>
+          {isPercentage ? (
+            <TooltipDataText>{`${payload[0].name} : ${payload[0].value}%`}</TooltipDataText>
+          ) : (
+            <TooltipDataText>{`${payload[0].name} : ${payload[0].value}`}</TooltipDataText>
+          )}
         </WinTooltipContainer>
       );
     } else {
@@ -103,13 +115,19 @@ const CustomTooltip = ({ active, payload, label }) => {
             </ChampionImage>
             <MatchInfo>
               <DefeatText>Defeat</DefeatText>
-              <ChampionNameText>{championName} / {userRole} </ChampionNameText>
+              <ChampionNameText>
+                {championName} / {userRole}{" "}
+              </ChampionNameText>
               <KDAText>
                 {kills} / {deaths} / {assists}
               </KDAText>
             </MatchInfo>
           </MatchDataContainer>
-          <TooltipDataText>{`${payload[0].name} : ${payload[0].value}`}</TooltipDataText>
+          {isPercentage ? (
+            <TooltipDataText>{`${payload[0].name} : ${payload[0].value}%`}</TooltipDataText>
+          ) : (
+            <TooltipDataText>{`${payload[0].name} : ${payload[0].value}`}</TooltipDataText>
+          )}
         </DefeatTooltipContainer>
       );
     }

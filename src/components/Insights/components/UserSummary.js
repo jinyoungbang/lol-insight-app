@@ -144,7 +144,7 @@ const changeDataFormat = (data) => {
   return modifiedData;
 };
 
-const UserSummary = (props, ref) => {
+const UserSummary = (props) => {
   const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [matchDataExists, setMatchDataExists] = useState(false);

@@ -45,7 +45,8 @@ function findNameToRender(stat) {
         "csd@15": "CS Difference @ 15",
         "goldPerMin": "Gold per min",
         "killParticipation": "Kill Participation",
-        "dmgPercentage": "DMG Percentage"
+        "dmgPercentage": "DMG Percentage",
+        "dmgDealtToObj": "DMG to Objectives"
     };
 
     if (!(stat in statsNameToRender)) {
