@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const changeDataFormat = (data) => {
-  const toRenderStats = ["dpm", "kda", "csPerMin", "visionScore"];
+  const toRenderStats = ["dpm", "kda", "csPerMin", "visionScore", "csd@15"];
   var modifiedData = [];
   var statsToIterate = Object.keys(data[0]);
   statsToIterate.forEach(async (stat) => {
