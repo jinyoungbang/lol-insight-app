@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) =>
       marginTop: "10px",
       marginBottom: "30px"
     },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+    },
   })
 );
 
@@ -55,6 +59,11 @@ function MobileFooter() {
             Privacy Policy
           </FooterLink>
         </div>
+        <div classesName={classes.footerText}>
+          <a href="mailto:jybang1999@gmail.com" className={classes.link}>
+            <FooterLink color="inherit">Feedback</FooterLink>
+          </a>
+        </div>
       </div>
       <Typography className={classes.notice} variant="subtitle1">
         Daiv isn’t endorsed by Riot Games and doesn’t reflect the views or
@@ -69,8 +78,8 @@ function MobileFooter() {
 
 const FooterLink = withStyles({
   root: {
-    marginRight: "18px",
-    fontSize: "11px",
+    marginRight: "15px",
+    fontSize: "10px",
     fontWeight: "400",
   },
 })(Link);

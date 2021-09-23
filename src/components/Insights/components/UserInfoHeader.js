@@ -1,7 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {
+  validateAndConvertRegion,
+  findRegionLambdaEndpoint,
+} from "../helpers/functions";
 
 const UserInfoHeader = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const refreshUserInsight = (region, name) => {
+    setIsLoading(true);
+    const refreshEndpoint = "refresh-insights";
+    const regionEndpoint = validateAndConvertRegion(region);
+    const lambdaEndpoint = findRegionLambdaEndpoint(regionEndpoint);
+
+    let urlEndpoint = process.env.REACT_APP_SERVER;
+    if (lambdaEndpoint === "americas")
+      urlEndpoint = process.env.REACT_APP_SERVER_US;
+    else if (lambdaEndpoint === "europe")
+      urlEndpoint = process.env.REACT_APP_SERVER_EU;
+
+    axios
+      .post(`${urlEndpoint}${refreshEndpoint}/${regionEndpoint}/${name}`)
+      .then((res) => {
+        //   var fetchedMatchData = res.data.matchData;
+        //   if (!fetchedMatchData || fetchedMatchData.length === 0) {
+        //     return;
+        //   } else {
+        //     setMatchDataExists(true);
+        //     setMatchData(changeDataFormat(fetchedMatchData.map((x) => x.insight)));
+        //     setMatchWin(fetchedMatchData.map((x) => x.win));
+        //     setMatchUserRole(fetchedMatchData.map((x) => x.userRole));
+        //     setChampionNames(fetchedMatchData.map((x) => x.championName));
+        //     setKills(fetchedMatchData.map((x) => x.kills));
+        //     setDeaths(fetchedMatchData.map((x) => x.deaths));
+        //     setAssists(fetchedMatchData.map((x) => x.assists));
+        //     props.fetchLastUpdated(res.data.lastUpdated);
+        //   }
+        // })
+        // .then(() => {
+        //   setIsLoading(false);
+        //   return;
+        window.location.reload();
+        return;
+      });
+
+    return;
+  };
+
   return (
     <HeaderContainer>
       <ContentContainer>
@@ -16,27 +65,49 @@ const UserInfoHeader = (props) => {
             alt="Summoner Icon"
           />
         </ProfileBorder>
-        <ProfileInfo>
-          <ProfileInfoTitle>{props.name}</ProfileInfoTitle>
-          {props.tier ? (
-            <div>
-              <ProfileInfoTierText>
-                {props.tier + " " + props.rank + " / " + props.lp + " LP"}{" "}
-              </ProfileInfoTierText>
-              <ProfileInfoSubtitle>
-                {"Win Ratio: " +
-                  props.winRate +
-                  "% / " +
-                  props.totalGamesPlayed +
-                  " games"}
-              </ProfileInfoSubtitle>
-            </div>
-          ) : (
-            <ProfileInfoTierText style={{marginBottom: "20px"}}>
+        <ProfileInfoContainer>
+          <ProfileInfo>
+            <ProfileInfoTitle>{props.name}</ProfileInfoTitle>
+            {props.tier ? (
+              <div>
+                <ProfileInfoTierText>
+                  {props.tier + " " + props.rank + " / " + props.lp + " LP"}{" "}
+                </ProfileInfoTierText>
+                <ProfileInfoSubtitle>
+                  {"Win Ratio: " +
+                    props.winRate +
+                    "% / " +
+                    props.totalGamesPlayed +
+                    " games"}
+                </ProfileInfoSubtitle>
+              </div>
+            ) : (
+              <ProfileInfoTierText style={{ marginBottom: "20px" }}>
                 Unranked
               </ProfileInfoTierText>
-          )}
-        </ProfileInfo>
+            )}
+          </ProfileInfo>
+          <RefreshContainer>
+            <Button
+              style={{
+                height: "38px",
+                width: "90px",
+                backgroundColor: "#635bff",
+                color: "#FCF7FF",
+                fontFamily: '"Inter", sans-serif;',
+              }}
+              variant="contained"
+              onClick={() => refreshUserInsight(props.region, props.name)}
+            >
+              {isLoading ? (
+                <CircularProgress color="inherit" size={15} />
+              ) : (
+                "Update"
+              )}
+            </Button>
+            <RefreshText>{"Last Updated: " + props.lastUpdated}</RefreshText>
+          </RefreshContainer>
+        </ProfileInfoContainer>
       </ContentContainer>
     </HeaderContainer>
   );
@@ -76,13 +147,18 @@ const ProfileInfo = styled.div`
   margin-left: 24px;
 `;
 
+const ProfileInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const ProfileInfoTitle = styled.div`
   color: #1d1a27;
   display: flex;
   align-items: center;
   justify-content: left;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 34px;
   font-weight: 700;
 `;
@@ -91,7 +167,7 @@ const ProfileInfoTierText = styled.div`
   color: #635bff;
   display: flex;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 600;
 `;
@@ -100,7 +176,7 @@ const ProfileInfoSubtitle = styled.div`
   color: #1d1a27;
   display: flex;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 400;
   margin-top: 5px;
@@ -125,4 +201,21 @@ const LevelContainer = styled.div`
   font-weight: 700;
 `;
 
+const RefreshContainer = styled.div`
+  height: 100%;
+  justify-content: flex-end;
+  margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const RefreshText = styled.div`
+  color: #696575;
+  align-items: left;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 6px;
+`;
 export default UserInfoHeader;

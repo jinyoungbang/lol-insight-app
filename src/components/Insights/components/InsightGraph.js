@@ -119,7 +119,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const WinTooltipContainer = styled.div`
-  background-color: #c5efff;
+  background-color: #b1d8fc;
   padding: 10px;
   border: 1px solid #958bb6;
   display: flex;
@@ -147,7 +147,7 @@ const MatchDataContainer = styled.div`
 const ChampionImage = styled.div`
   position: relative;
   border: 1px solid #1d1a27;
-  border-radius: 4px;
+  border-radius: 2px;
   height: 50px;
   width: 50px;
   margin-right: 10px;
@@ -160,7 +160,7 @@ const MatchInfo = styled.div`
 `;
 
 const WinText = styled.div`
-  color: #6871e4;
+  color: #5f69de;
   text-align: left;
   font-family: "Inter", sans-serif;
   font-size: 12px;

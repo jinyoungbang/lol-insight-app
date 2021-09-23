@@ -14,7 +14,8 @@ import {
 } from "../helpers/functions";
 
 import LoadingCircular from "./LoadingCircular";
-import Ads from "./Ads";
+import AdsInsightsTop from "./Ads/AdsInsightsTop";
+import AdsInsightsBottom from "./Ads/AdsInsightsBottom";
 import InsightGraph from "./InsightGraph";
 import MatchNotFound from "./Errors/MatchNotFound";
 
@@ -62,6 +63,13 @@ const AntTab = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    adRoot: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      width: "100%",
+      height: "100%",
+    },
     padding: {
       padding: theme.spacing(3),
     },
@@ -72,8 +80,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       flexDirection: "row",
       alignItems: "flex-start",
-      margin: "0 150px",
-      //   minWidth: "100%"
+      width: "79%",
     },
     userPersonalInfo: {
       display: "flex",
@@ -137,7 +144,7 @@ const changeDataFormat = (data) => {
   return modifiedData;
 };
 
-const UserSummary = (props) => {
+const UserSummary = (props, ref) => {
   const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [matchDataExists, setMatchDataExists] = useState(false);
@@ -156,6 +163,7 @@ const UserSummary = (props) => {
     detectAdBlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const matchEndpoint = "find-insights";
   const classes = useStyles();
@@ -194,17 +202,21 @@ const UserSummary = (props) => {
     axios
       .get(`${urlEndpoint}${matchEndpoint}/${regionEndpoint}/${props.name}`)
       .then((res) => {
-        if (res.data.length > 0) {
-          setMatchDataExists(true);
-          setMatchData(changeDataFormat(res.data.map((x) => x.insight)));
-          setMatchWin(res.data.map((x) => x.win));
-          setMatchUserRole(res.data.map((x) => x.userRole));
-          setChampionNames(res.data.map((x) => x.championName));
-          setKills(res.data.map((x) => x.kills));
-          setDeaths(res.data.map((x) => x.deaths));
-          setAssists(res.data.map((x) => x.assists));
-        } else {
+        var fetchedMatchData = res.data.matchData;
+        if (!fetchedMatchData || fetchedMatchData.length === 0) {
           setMatchDataExists(false);
+        } else {
+          setMatchDataExists(true);
+          setMatchData(
+            changeDataFormat(fetchedMatchData.map((x) => x.insight))
+          );
+          setMatchWin(fetchedMatchData.map((x) => x.win));
+          setMatchUserRole(fetchedMatchData.map((x) => x.userRole));
+          setChampionNames(fetchedMatchData.map((x) => x.championName));
+          setKills(fetchedMatchData.map((x) => x.kills));
+          setDeaths(fetchedMatchData.map((x) => x.deaths));
+          setAssists(fetchedMatchData.map((x) => x.assists));
+          props.fetchLastUpdated(res.data.lastUpdated);
         }
       })
       .then(() => {
@@ -229,8 +241,8 @@ const UserSummary = (props) => {
     return <LoadingCircular />;
   } else {
     return (
-      <div>
-        {adBlockEnabled ? <div /> : <Ads />}
+      <div className={classes.adRoot}>
+        {adBlockEnabled || !matchDataExists ? <div /> : <AdsInsightsTop />}
         {matchDataExists ? (
           <div className={classes.root}>
             <div className={classes.userPersonalInfo}>
@@ -274,6 +286,7 @@ const UserSummary = (props) => {
         ) : (
           <MatchNotFound />
         )}
+        {adBlockEnabled || !matchDataExists ? <div /> : <AdsInsightsBottom />}
       </div>
     );
   }

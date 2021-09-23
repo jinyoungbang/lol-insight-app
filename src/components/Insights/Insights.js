@@ -18,12 +18,15 @@ import {
 
 const Insights = () => {
   const userEndpoint = "find-user-info";
+
   var { region, name } = useParams();
   region = region.toLowerCase();
+
 
   const [userExists, setUserExists] = useState(null);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState("");
 
   useEffect(() => {
     getUserInfo();
@@ -55,6 +58,28 @@ const Insights = () => {
     return;
   };
 
+  // Helper function to fetch last updated from child component
+  const fetchLastUpdated = (date) => {
+    console.log(date);
+    const currentDate = new Date();
+    const lastUpdatedDate = new Date(date + "Z");
+    var ms = currentDate - lastUpdatedDate;
+    const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+    const daysms = ms % (24 * 60 * 60 * 1000);
+    const hours = Math.floor(daysms / (60 * 60 * 1000));
+    const hoursms = ms % (60 * 60 * 1000);
+    const minutes = Math.floor(hoursms / (60 * 1000));
+    // const minutesms = ms % (60 * 1000);
+    // const sec = Math.floor(minutesms / 1000);
+
+    if (days > 1) setLastUpdated(days.toString() + " days ago");
+    else if (days === 1) setLastUpdated(days.toString() + " day ago");
+    else if (hours > 1) setLastUpdated(hours.toString() + " hours ago");
+    else if (hours === 1) setLastUpdated(hours.toString() + " hour ago");
+    else if (minutes > 1) setLastUpdated(minutes.toString() + " minutes ago");
+    else setLastUpdated("A few seconds ago");
+  };
+
   if (isLoading) {
     <Container>
       <BackgroundOverlay color="#f5f9fc" />
@@ -80,8 +105,13 @@ const Insights = () => {
             profileIconId={userData["profileIconId"]}
             winRate={userData["winRate"]}
             totalGamesPlayed={userData["totalGamesPlayed"]}
+            lastUpdated={lastUpdated}
           />
-          <UserSummary region={region} name={name} />
+          <UserSummary
+            region={region}
+            name={name}
+            fetchLastUpdated={fetchLastUpdated}
+          />
         </div>
       ) : (
         <UserNotFound />

@@ -95,9 +95,6 @@ const HomeMobile = () => {
             Insights Visualization Platform – Daiv into your statistics!
           </SubText>
         </div>
-        <div className={classes.adsContainer}>
-          <div className="adfit" />
-        </div>
         <div className={classes.searchBar}>
           <ResponsiveSearchBar />
         </div>
