@@ -37,7 +37,7 @@ const useStyles = makeStyles(() =>
       minWidth: "970px",
       width: "100%",
       position: "relative",
-      overflowX: "hidden"
+      overflowX: "hidden",
     },
     policyContainer: {
       minWidth: "970px",
@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
             <p>
               This Privacy Policy applies only to our online activities and is
               valid for visitors to our website with regards to the information
-              that they shared and/or collect in DAIV. This policy is not
+              that they shared and/or collect in Daiv. This policy is not
               applicable to any information collected offline or via channels
               other than this website.
             </p>
@@ -121,14 +121,6 @@ export default function PrivacyPolicy() {
               <li>
                 Develop new products, services, features, and functionality
               </li>
-              <li>
-                Communicate with you, either directly or through one of our
-                partners, including for customer service, to provide you with
-                updates and other information relating to the website, and for
-                marketing and promotional purposes
-              </li>
-              <li>Send you emails</li>
-              <li>Find and prevent fraud</li>
             </ul>
 
             <h2>Log Files</h2>
@@ -160,6 +152,15 @@ export default function PrivacyPolicy() {
             <p><a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
           </li>
         </ul> */}
+            <h2>Sale of Business or Assets</h2>
+            <p>
+              In the event that the Site or substantially all of its assets is
+              sold or disposed of as a going concern, whether by merger, sale of
+              assets or otherwise, or in the event of an insolvency, bankruptcy
+              or receivership, the information we have collected about you may
+              be one of the assets sold or merged in connection with that
+              transaction.
+            </p>
 
             <h2>Advertising Partners Privacy Policies</h2>
 
