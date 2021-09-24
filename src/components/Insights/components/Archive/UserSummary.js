@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-
+import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
+import Typography from "@material-ui/core/Typography";
 import UserInsightsCheckbox from "./UserInsightsCheckbox";
 
 import {
@@ -11,13 +13,53 @@ import {
   findRegionLambdaEndpoint,
 } from "../helpers/functions";
 
-import UserInsightsFilterBox from "./UserInsightsFilterBox";
-
 import LoadingCircular from "./LoadingCircular";
 import AdsInsightsTop from "./Ads/AdsInsightsTop";
 import AdsInsightsBottom from "./Ads/AdsInsightsBottom";
-import UserInsightGraph from "./UserInsightGraph";
+import InsightGraph from "./InsightGraph";
 import MatchNotFound from "./Errors/MatchNotFound";
+
+const AntTabs = withStyles({
+  root: {
+    borderBottom: "1px solid #e8e8e8",
+  },
+  indicator: {
+    backgroundColor: "#1890ff",
+  },
+})(Tabs);
+
+const AntTab = withStyles((theme) => ({
+  root: {
+    textTransform: "none",
+    minWidth: 72,
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(4),
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    "&:hover": {
+      color: "#40a9ff",
+      opacity: 1,
+    },
+    "&$selected": {
+      color: "#1890ff",
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    "&:focus": {
+      color: "#40a9ff",
+    },
+  },
+  selected: {},
+}))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -103,26 +145,10 @@ const changeDataFormat = (data) => {
 };
 
 const UserSummary = (props) => {
+  const [value, setValue] = React.useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [matchDataExists, setMatchDataExists] = useState(false);
   const [adBlockEnabled, setAdBlockEnabled] = useState(false);
-
-  const [filterBoxStates, setFilterBoxStates] = useState({
-    matchResultType: "overall",
-    mapType: "summonersRift",
-    queueType: "ranked",
-  });
-
-  const changeFilterBoxStates = async (event) => {
-    var filter = "";
-    var matchResultTypes = ["overall", "victory", "defeat"];
-    var mapTypes = ["summonersRift", "howlingAbyss"];
-    var queueTypes = ["ranked", "normal", "aram"];
-    if (matchResultTypes.includes(event.target.value)) filter = "matchResultType";
-    else if (mapTypes.includes(event.target.value)) filter = "mapType";
-    else if (queueTypes.includes(event.target.value)) filter = "queueType";
-    setFilterBoxStates({...filterBoxStates, [filter]: event.target.value})
-  };
 
   const [matchData, setMatchData] = useState([]);
   const [matchWin, setMatchWin] = useState([]);
@@ -138,8 +164,13 @@ const UserSummary = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   const matchEndpoint = "find-insights";
   const classes = useStyles();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleRenderChange = async (event) => {
     let idxToChange = matchData.findIndex(
@@ -176,12 +207,6 @@ const UserSummary = (props) => {
           setMatchDataExists(false);
         } else {
           setMatchDataExists(true);
-          console.log(res);
-          const insights = changeDataFormat(
-            fetchedMatchData.map((x) => x.insight)
-          );
-          console.log(insights);
-
           setMatchData(
             changeDataFormat(fetchedMatchData.map((x) => x.insight))
           );
@@ -228,12 +253,22 @@ const UserSummary = (props) => {
             </div>
             <div className={classes.userMatchInfo}>
               <InfoInsightContainer>
-                <UserInsightsFilterBox filterBoxStates={filterBoxStates} handleChange={changeFilterBoxStates} />
                 <GraphContainer>
+                  <div className={classes.demo1}>
+                    <AntTabs
+                      value={value}
+                      onChange={handleChange}
+                      aria-label="Role Tab"
+                    >
+                      <AntTab label="Overall" />
+                      {/* <AntTab label="Coming Soon..." disabled={true} /> */}
+                    </AntTabs>
+                    <Typography className={classes.padding} />
+                  </div>
                   {matchData
                     .filter((d) => d.toRender)
                     .map((data, i) => (
-                      <UserInsightGraph
+                      <InsightGraph
                         key={i}
                         data={data}
                         win={matchWin}

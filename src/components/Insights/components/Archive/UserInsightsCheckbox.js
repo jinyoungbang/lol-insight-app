@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) =>
     },
     formTitle: {
       color: "#1D1A27",
-      fontFamily: "'Noto Sans KR', sans-serif",
+      fontFamily: "'Inter', sans-serif",
       fontWeight: "800",
     },
   })
@@ -55,8 +55,8 @@ const UserInsightsCheckbox = (props) => {
 const DaivFormControlLabel = withStyles({
   label: {
     color: "#1D1A27",
-    fontFamily: "'Inter', sans-serif",
-    fontWeight: "200",
+    fontFamily: "'Noto Sans KR', sans-serif",
+    fontWeight: "300",
   },
 })(FormControlLabel);
 
