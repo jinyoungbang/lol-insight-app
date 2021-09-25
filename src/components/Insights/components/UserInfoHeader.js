@@ -25,25 +25,7 @@ const UserInfoHeader = (props) => {
 
     axios
       .post(`${urlEndpoint}${refreshEndpoint}/${regionEndpoint}/${name}`)
-      .then((res) => {
-        //   var fetchedMatchData = res.data.matchData;
-        //   if (!fetchedMatchData || fetchedMatchData.length === 0) {
-        //     return;
-        //   } else {
-        //     setMatchDataExists(true);
-        //     setMatchData(changeDataFormat(fetchedMatchData.map((x) => x.insight)));
-        //     setMatchWin(fetchedMatchData.map((x) => x.win));
-        //     setMatchUserRole(fetchedMatchData.map((x) => x.userRole));
-        //     setChampionNames(fetchedMatchData.map((x) => x.championName));
-        //     setKills(fetchedMatchData.map((x) => x.kills));
-        //     setDeaths(fetchedMatchData.map((x) => x.deaths));
-        //     setAssists(fetchedMatchData.map((x) => x.assists));
-        //     props.fetchLastUpdated(res.data.lastUpdated);
-        //   }
-        // })
-        // .then(() => {
-        //   setIsLoading(false);
-        //   return;
+      .then(() => {
         window.location.reload();
         return;
       });
@@ -98,6 +80,7 @@ const UserInfoHeader = (props) => {
               }}
               variant="contained"
               onClick={() => refreshUserInsight(props.region, props.name)}
+              disabled={isLoading ? true : false}
             >
               {isLoading ? (
                 <CircularProgress color="inherit" size={15} />

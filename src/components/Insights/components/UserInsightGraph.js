@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const InsightGraph = (props) => {
+const UserInsightGraph = (props) => {
   const data = props.data.data
     .map((val, i) => ({
       name: "Most Recent Match #" + i.toString(),
@@ -22,6 +22,8 @@ const InsightGraph = (props) => {
       assists: props.assists[i],
     }))
     .reverse();
+  
+
 
   return (
     <ContentContainer>
@@ -42,12 +44,18 @@ const InsightGraph = (props) => {
           <YAxis />
           <Tooltip content={<CustomTooltip />} />
           {/* <Legend /> */}
-          <Line
+          {data.win ? (<Line
             type="monotone"
             dataKey={props.data.statsName}
             stroke="#8884d8"
             activeDot={{ r: 8 }}
-          />
+          />) : (<Line
+            type="monotone"
+            dataKey={props.data.statsName}
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />)}
+
           {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
         </LineChart>
       </ResponsiveContainer>
@@ -243,4 +251,4 @@ const ContentContainer = styled.div`
   display: flex;
 `;
 
-export default InsightGraph;
+export default UserInsightGraph;
