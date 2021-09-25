@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -21,7 +22,6 @@ const Insights = () => {
 
   var { region, name } = useParams();
   region = region.toLowerCase();
-
 
   const [userExists, setUserExists] = useState(null);
   const [userData, setUserData] = useState({});
@@ -60,7 +60,6 @@ const Insights = () => {
 
   // Helper function to fetch last updated from child component
   const fetchLastUpdated = (date) => {
-    console.log(date);
     const currentDate = new Date();
     const lastUpdatedDate = new Date(date + "Z");
     var ms = currentDate - lastUpdatedDate;
@@ -89,6 +88,9 @@ const Insights = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>{name} - Insights | Daiv</title>
+      </Helmet>
       <BackgroundOverlay color="#f5f9fc" />
       <HeaderSearch region={region} name={name} />
       {userExists === null ? (

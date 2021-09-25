@@ -97,6 +97,11 @@ const UserInsightsFilterBox = (props) => {
           onChange={props.handleChange}
         >
           <CustomFormControlLabel
+            value="overallQueue"
+            control={<CustomRadio size="small" />}
+            label={<div className={classes.radioFormText}>Overall</div>}
+          />
+          <CustomFormControlLabel
             value="ranked"
             control={<CustomRadio size="small" />}
             label={<div className={classes.radioFormText}>Ranked</div>}
@@ -105,11 +110,6 @@ const UserInsightsFilterBox = (props) => {
             value="normal"
             control={<CustomRadio size="small" />}
             label={<div className={classes.radioFormText}>Normal</div>}
-          />
-          <CustomFormControlLabel
-            value="aram"
-            control={<CustomRadio size="small" />}
-            label={<div className={classes.radioFormText}>ARAM</div>}
           />
         </RadioGroup>
       </div>
@@ -121,7 +121,7 @@ const CustomFormControlLabel = withStyles({
   root: {
     color: "#1D1A27",
     marginBottom: "-10px",
-    marginLeft: "2px"
+    marginLeft: "2px",
   },
 })(FormControlLabel);
 

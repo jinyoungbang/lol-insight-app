@@ -56,8 +56,9 @@ const DaivFormControlLabel = withStyles({
   label: {
     color: "#1D1A27",
     fontFamily: "'Inter', sans-serif",
-    fontWeight: "200",
+    fontWeight: "300",
   },
 })(FormControlLabel);
+
 
 export default UserInsightsCheckbox;
