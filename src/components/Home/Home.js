@@ -50,11 +50,11 @@ const useStyles = makeStyles((theme) =>
       height: "100%",
     },
     logo: {
-      marginTop: "60px",
+      marginTop: "20px",
       marginBottom: "-20px",
     },
     logoImage: {
-      height: "250px",
+      height: "300px",
     },
     textField: {
       marginBottom: "50px",
@@ -93,7 +93,7 @@ const Home = () => {
           <div className={classes.logo}>
             <img
               className={classes.logoImage}
-              src={"/logo-beta.png"}
+              src={"/logo.png"}
               alt="Daiv Logo"
             />
           </div>
