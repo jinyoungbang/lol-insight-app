@@ -12,6 +12,7 @@ import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import SearchBar from "./components/SearchBar";
 import Footer from "./components/Footer";
+import Header from "./Header";
 
 const theme = createTheme({
   palette: {
@@ -90,6 +91,7 @@ const Home = () => {
       {isTabletOrMobile && <HomeMobile />}
       {isDesktopOrLaptop && (
         <div className={classes.root}>
+        <Header />
           <div className={classes.logo}>
             <img
               className={classes.logoImage}

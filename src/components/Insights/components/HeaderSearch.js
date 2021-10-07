@@ -60,6 +60,19 @@ const HeaderSearch = (props) => {
             />
           </a>
         </LogoContainer>
+        <NavigationText>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>
+            Home
+          </a>
+        </NavigationText>
+        <NavigationText>
+          <a
+            href="/trends"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            Trends
+          </a>
+        </NavigationText>
         <SearchContainer>
           <form
             target="_self"
@@ -105,6 +118,17 @@ const HeaderSearch = (props) => {
     </HeaderContainer>
   );
 };
+
+const NavigationText = styled.div`
+  color: #fbf7ff;
+  vertical-align: middle;
+  align-self: center;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 18px;
+  text-decoration: none;
+`;
 
 const HeaderContainer = styled.div`
   background: linear-gradient(to right, #635bff 0%, #003ab9 50%, #0273e6 100%);
