@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) =>
       margin: "0 auto",
       width: "850px",
     },
+    adblockContainer: {
+      marginTop: "50px"
+    }
   })
 );
 
@@ -64,10 +67,25 @@ const Trends = () => {
 
   const [trendsData, setTrendsData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [adBlockEnabled, setAdBlockEnabled] = useState(false);
+
   useEffect(() => {
     getTrendData();
+    detectAdBlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const detectAdBlock = async () => {
+    const googleAdUrl =
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    try {
+      await fetch(new Request(googleAdUrl)).catch((_) =>
+        setAdBlockEnabled(true)
+      );
+    } catch (e) {
+      setAdBlockEnabled(true);
+    }
+  };
 
   const getTrendData = () => {
     let urlEndpoint = process.env.REACT_APP_SERVER;
@@ -90,7 +108,8 @@ const Trends = () => {
     <Container>
       <BackgroundOverlay color="#f5f9fc" />
       <HeaderSearch region={"NA"} />
-      <AdsTrendsTop />
+      {adBlockEnabled ? <div className={classes.adblockContainer} /> : <div />}
+      {adBlockEnabled ? <div /> : <AdsTrendsTop />}
       <div className={classes.title}>Metrics Trends</div>
       <div className={classes.subtitle}>
         By analyzing 200,000+ Platinum and above games, the graphs below show

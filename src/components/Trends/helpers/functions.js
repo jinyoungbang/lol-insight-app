@@ -11,13 +11,11 @@ function convertKeyToName(key) {
 function convertDataToGraphFormat(data) {
     let dataToReturn = []
     for (const [key, value] of Object.entries(data)) {
-        console.log(key, value)
         dataToReturn.push({
             name: key,
             weight: value
         })
     }
-    console.log(dataToReturn);
     return dataToReturn;
 }
   

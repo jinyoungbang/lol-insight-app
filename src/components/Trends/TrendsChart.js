@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) =>
       textAlign: "left",
       marginBottom: "30px",
     },
+    border: {
+      borderBottom: "1px solid #d0d2d9",
+      marginTop: "25px",
+      marginBottom: "45px",
+      margin: "0 auto",
+      width: "850px",
+    },
   })
 );
 
@@ -61,6 +68,7 @@ const TrendsChart = (props) => {
           <Bar dataKey="weight" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
+      <div className={classes.border} />
     </div>
   );
 };
