@@ -10,6 +10,7 @@ import BackgroundOverlay from "../BackgroundOverlay";
 import styled from "styled-components";
 import ResponsiveSearchBar from "./components/ResponsiveSearchBar";
 import MobileFooter from "./components/MobileFooter";
+import Header from "./Header";
 
 const theme = createTheme({
   palette: {
@@ -50,9 +51,11 @@ const useStyles = makeStyles((theme) =>
     logo: {
       marginTop: "40px",
       marginBottom: "-30px",
+      display: "flex",
+      justifyContent: "center"
     },
     logoImage: {
-      height: "225px",
+      height: "230px",
     },
     textField: {
       marginTop: "20px",
@@ -72,7 +75,7 @@ const useStyles = makeStyles((theme) =>
     },
     adsContainer: {
       margin: "0 auto",
-      width: "90%"
+      width: "90%",
     },
   })
 );
@@ -83,6 +86,7 @@ const HomeMobile = () => {
     <ThemeProvider theme={theme}>
       <BackgroundOverlay color="#635bff" />
       <div className={classes.root}>
+        <Header />
         <div className={classes.logo}>
           <img
             className={classes.logoImage}

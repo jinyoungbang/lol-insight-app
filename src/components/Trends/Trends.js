@@ -98,10 +98,13 @@ const Trends = () => {
   };
 
   if (isLoading) {
+    return (
     <Container>
       <BackgroundOverlay color="#f5f9fc" />
+      <HeaderSearch region={"NA"} />
       <LoadingCircular />
-    </Container>;
+    </Container>
+    )
   }
 
   return (
